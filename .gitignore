@@ -1,4 +1,5 @@
 *.swp
-.classpath
-.project
-.prefs
+*.classpath
+*.project
+*.prefs
+*.settings
