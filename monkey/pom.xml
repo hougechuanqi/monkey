@@ -7,5 +7,6 @@
   <modules>
   	<module>monkey-rpc</module>
   	<module>monkey-transport</module>
+  	<module>monkey-common</module>
   </modules>
 </project>
