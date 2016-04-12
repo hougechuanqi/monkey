@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.pets10000.monkey</groupId>
+	<groupId>org.vrtech.monkey</groupId>
 	<artifactId>monkey</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
@@ -11,11 +11,26 @@
 		<module>monkey-common</module>
 	</modules>
 	<properties>
+		<!-- Spring lib -->
 		<spring_version>3.2.3.RELEASE</spring_version>
 		<javassist_version>3.15.0-GA</javassist_version>
 		<guava_version>11.0.2</guava_version>
+		<!-- io lib -->
 		<netty_version>4.0.28.Final</netty_version>
 		<mina_version>2.0.9</mina_version>
+		<!-- utils -->
+		<guava_version>19.0</guava_version>
+		<googlecollection_version>1.0</googlecollection_version>
+		<!-- commons libs -->
+		<commons-collection_version>4.1</commons-collection_version>
+		<commons-codec_version>1.10</commons-codec_version>
+		<commons-collections4_version>4.1</commons-collections4_version>
+		<!-- log libs -->
+		<commons-io_version>2.4</commons-io_version>
+		<slf4j_version>1.6.2</slf4j_version>
+		<jcl_version>1.1</jcl_version>
+		<log4j_version>1.2.16</log4j_version>
+		<logback_version>1.0.6</logback_version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -54,6 +69,63 @@
 				<groupId>org.apache.mina</groupId>
 				<artifactId>mina-core</artifactId>
 				<version>${mina_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.collections</groupId>
+				<artifactId>google-collections</artifactId>
+				<version>${googlecollection_version}</version>
+			</dependency>
+			<!-- apache commons -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-collections4</artifactId>
+				<version>${commons-collection_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>${commons-codec_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-collections4</artifactId>
+				<version>${commons-collections4_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons-io_version}</version>
+			</dependency>
+			<!-- Log libs -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging-api</artifactId>
+				<version>${jcl_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>${logback_version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
