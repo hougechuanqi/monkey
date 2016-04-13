@@ -13,10 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vrtech.common;
-
-import org.vrtech.common.logs.Logger;
-import org.vrtech.common.logs.LoggerFactory;
+package org.vrtech.common.plugin;
 
 /**
  *
@@ -24,14 +21,8 @@ import org.vrtech.common.logs.LoggerFactory;
  * 
  * @author houge
  */
-public class Version {
+public interface Plugins {
     
-    private static final Logger logger = LoggerFactory.getLogger(Version.class);
-
-    private static final String VERSION = "1.0.0";
-
-    public static String getVersion() {
-        return VERSION;
-    }
+    
 
 }

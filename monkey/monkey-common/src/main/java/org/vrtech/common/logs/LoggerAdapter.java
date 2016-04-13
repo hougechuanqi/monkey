@@ -16,13 +16,17 @@
 package org.vrtech.common.logs;
 
 import java.io.File;
+
+import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationContextAware;
 /**
  *
  * Function description： 1.XXX 2.XXX
  * 
  * @author houge
  */
-public interface LoggerAdapter {
+public interface LoggerAdapter extends ApplicationContextAware, InitializingBean, BeanNameAware {
     /**
      * 获取日志输出器
      *

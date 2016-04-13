@@ -13,10 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vrtech.common;
+package org.vrtech.common.annotation;
 
-import org.vrtech.common.logs.Logger;
-import org.vrtech.common.logs.LoggerFactory;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  *
@@ -24,14 +27,23 @@ import org.vrtech.common.logs.LoggerFactory;
  * 
  * @author houge
  */
-public class Version {
-    
-    private static final Logger logger = LoggerFactory.getLogger(Version.class);
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE})
+public @interface Service {
 
-    private static final String VERSION = "1.0.0";
+    /***
+     * 服务名称
+     * 
+     * @return
+     */
+    String name();
 
-    public static String getVersion() {
-        return VERSION;
-    }
+    /***
+     * 服务URL路径
+     * 
+     * @return
+     */
+    String url();
 
 }
