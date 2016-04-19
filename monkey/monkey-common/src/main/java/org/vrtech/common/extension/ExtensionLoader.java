@@ -22,6 +22,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.vrtech.common.annotation.Service;
 
 /**
  *
@@ -42,8 +43,10 @@ public class ExtensionLoader
 
     private Map<Class<?>, Object> clazz2InstanceMap = new ConcurrentHashMap<Class<?>, Object>();
 
+    private Map<String, Object> url2InstanceMap = new ConcurrentHashMap<String, Object>();
+
     /***
-     * 加载标签，Service交给spring来管理
+     * 加载服务，Service交给spring来管理
      * 
      * @param ctx
      */
@@ -51,7 +54,14 @@ public class ExtensionLoader
         Map<String, Object> beans = ctx
                 .getBeansWithAnnotation(org.vrtech.common.annotation.Service.class);
         for (String beanName : beans.keySet()) {
-            System.out.println(beanName);
+            Object bean = beans.get(beanName);
+            Class<?> clazz = bean.getClass();
+            final Service service = clazz.getAnnotation(Service.class);
+            final String name = service.name();
+            final String url = service.url();
+            url2InstanceMap.put(url, bean);
+            clazz2InstanceMap.put(clazz, bean);
+            serviceClazzMap.put(name, clazz);
         }
     }
 

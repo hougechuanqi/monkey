@@ -31,6 +31,7 @@
 		<jcl_version>1.1</jcl_version>
 		<log4j_version>1.2.16</log4j_version>
 		<logback_version>1.0.6</logback_version>
+		<javassist_version>3.15.0-GA</javassist_version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -136,6 +137,11 @@
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-classic</artifactId>
 				<version>${logback_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.javassist</groupId>
+				<artifactId>javassist</artifactId>
+				<version>${javassist_version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

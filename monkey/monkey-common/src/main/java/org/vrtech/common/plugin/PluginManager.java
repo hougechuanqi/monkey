@@ -17,15 +17,10 @@ package org.vrtech.common.plugin;
 
 /**
  *
- * Function description： 1.XXX 2.XXX
+ * Function description： 插件管理器
  * 
  * @author houge
  */
-public interface Plugins {
-
-    /***
-     * 加载插件
-     */
-    public void loadPlugin();
+public class PluginManager {
 
 }
