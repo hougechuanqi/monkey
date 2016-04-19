@@ -21,5 +21,11 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
+		<!--  -->
+		<dependency>
+			<groupId>org.vrtech.monkey</groupId>
+			<artifactId>monkey-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>
