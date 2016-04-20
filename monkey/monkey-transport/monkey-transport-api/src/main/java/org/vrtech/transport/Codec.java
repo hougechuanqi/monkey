@@ -15,13 +15,25 @@
  */
 package org.vrtech.transport;
 
+import java.io.IOException;
+
+import org.vrtech.transport.buffer.ChannelBuffer;
+
 /**
  *
- * Function description：
- * 1.XXX
- * 2.XXX
+ * Function description： 1.协议编解码接口
+ * 
  * @author houge
  */
 public interface Codec {
+
+    void encode(Channel channel, ChannelBuffer buffer, Object message)
+            throws IOException;
+
+    Object decode(Channel channel, ChannelBuffer buffer) throws IOException;
+
+    enum DecodeResult {
+        NEED_MORE_INPUT, SKIP_SOME_INPUT
+    }
 
 }

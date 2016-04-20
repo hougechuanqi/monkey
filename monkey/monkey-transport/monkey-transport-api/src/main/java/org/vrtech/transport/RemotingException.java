@@ -20,8 +20,7 @@ import java.net.InetSocketAddress;
 /**
  *
  * Function description：
- * 1.XXX
- * 2.XXX
+ * 
  * @author houge
  */
 public class RemotingException extends Exception {
