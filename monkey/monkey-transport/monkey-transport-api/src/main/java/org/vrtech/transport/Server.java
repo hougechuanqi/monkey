@@ -15,17 +15,36 @@
  */
 package org.vrtech.transport;
 
+import java.net.InetSocketAddress;
+import java.util.Collection;
+
 /**
  *
- * Function description：
- * 1.XXX
- * 2.XXX
+ * Function description： 1.XXX 2.XXX
+ * 
  * @author houge
  */
-public interface Transporter {
-    
-    
-    
-    
+public interface Server extends Endpoint {
+
+    /***
+     * 
+     * @return
+     */
+    boolean isBound();
+
+    /***
+     * get channels
+     * 
+     * @return
+     */
+    Collection<Channel> getChannels();
+
+    /****
+     * get remote channel
+     * 
+     * @param remoteAddress
+     * @return
+     */
+    Channel getChannel(InetSocketAddress remoteAddress);
 
 }

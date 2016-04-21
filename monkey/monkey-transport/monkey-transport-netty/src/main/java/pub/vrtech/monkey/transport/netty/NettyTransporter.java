@@ -13,19 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vrtech.transport;
+package pub.vrtech.monkey.transport.netty;
+
+import io.netty.channel.ChannelHandler;
+
+import org.vrtech.common.URL;
+import org.vrtech.transport.Server;
+import org.vrtech.transport.Transporter;
 
 /**
  *
- * Function description：
- * 1.XXX
- * 2.XXX
+ * Function description： 1.XXX 2.XXX
+ * 
  * @author houge
  */
-public interface Transporter {
-    
-    
-    
-    
+public class NettyTransporter implements Transporter {
 
+    public final static String NAME = "netty";
+
+   
 }

@@ -27,8 +27,16 @@ import org.vrtech.common.URL;
  */
 public interface Endpoint {
 
+    /***
+     * 
+     * @return
+     */
     URL getUrl();
 
+    /***
+     * 
+     * @return
+     */
     ChannelHandler getChannelHandler();
 
     /**

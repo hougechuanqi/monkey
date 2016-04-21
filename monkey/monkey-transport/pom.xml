@@ -10,6 +10,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>monkey-transport-api</module>
+		<module>monkey-transport-netty</module>
 	</modules>
 
 	<dependencies>

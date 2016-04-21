@@ -15,17 +15,38 @@
  */
 package org.vrtech.transport;
 
+import org.vrtech.common.URL;
+import org.vrtech.common.logs.Logger;
+import org.vrtech.common.logs.LoggerFactory;
+
 /**
  *
- * Function description：
- * 1.XXX
- * 2.XXX
+ * Function description： 1.XXX 2.XXX
+ * 
  * @author houge
  */
-public interface Transporter {
-    
-    
-    
-    
+public abstract class AbstractEndpoint extends AbstractPeer {
 
+    private final static Logger logger = LoggerFactory
+            .getLogger(AbstractEndpoint.class);
+
+    private Codec codec;
+
+    private int timeout;
+
+    private int connectTimeout;
+
+    /**
+     * @param url
+     * @param handler
+     */
+    public AbstractEndpoint(URL url, ChannelHandler handler) {
+        super(url, handler);
+    }
+
+    public Codec getCodec() {
+        return codec;
+    }
+
+    
 }

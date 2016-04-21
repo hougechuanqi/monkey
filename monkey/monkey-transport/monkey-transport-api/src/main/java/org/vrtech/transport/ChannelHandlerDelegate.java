@@ -17,15 +17,12 @@ package org.vrtech.transport;
 
 /**
  *
- * Function description：
- * 1.XXX
- * 2.XXX
+ * Function description： 1.XXX 2.XXX
+ * 
  * @author houge
  */
-public interface Transporter {
-    
-    
-    
-    
+public interface ChannelHandlerDelegate extends ChannelHandler {
+
+    public ChannelHandler getHandler();
 
 }

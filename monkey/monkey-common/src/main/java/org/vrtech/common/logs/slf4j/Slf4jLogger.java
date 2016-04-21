@@ -35,6 +35,10 @@ public class Slf4jLogger implements Logger, Serializable {
     public Slf4jLogger(org.slf4j.Logger logger) {
         this.logger = logger;
     }
+    
+    public void error(String format, Object argA, Object argB) {
+        logger.error(format, argA, argB);
+    }
 
     public void trace(String msg) {
         logger.trace(msg);
