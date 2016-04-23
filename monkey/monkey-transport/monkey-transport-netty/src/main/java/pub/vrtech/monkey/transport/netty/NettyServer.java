@@ -16,6 +16,7 @@
 package pub.vrtech.monkey.transport.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
@@ -24,18 +25,18 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 import java.net.InetSocketAddress;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-import org.vrtech.common.URL;
-import org.vrtech.common.logs.Logger;
-import org.vrtech.common.logs.LoggerFactory;
-import org.vrtech.common.utils.NamedThreadFactory;
-import org.vrtech.transport.Channel;
-import org.vrtech.transport.ChannelHandler;
-import org.vrtech.transport.RemotingException;
-import org.vrtech.transport.transportes.AbstractServer;
+import pub.vrtech.common.URL;
+import pub.vrtech.common.logs.Logger;
+import pub.vrtech.common.logs.LoggerFactory;
+import pub.vrtech.common.utils.NamedThreadFactory;
+import pub.vrtech.common.utils.NetUtils;
+import pub.vrtech.transport.Channel;
+import pub.vrtech.transport.ChannelHandler;
+import pub.vrtech.transport.RemotingException;
+import pub.vrtech.transport.transports.AbstractServer;
 
 /**
  *
@@ -53,6 +54,9 @@ public class NettyServer extends AbstractServer {
     private ServerBootstrap bootstrap;
 
     private io.netty.channel.Channel channel;
+
+    EventLoopGroup workerGroup = null;
+    EventLoopGroup bossGroup = null;
 
     /**
      * @param url
@@ -77,10 +81,10 @@ public class NettyServer extends AbstractServer {
         // NamedThreadFactory("NettyServerBoss",true));
         // ExecutorService worker=Executors.newCachedThreadPool(new
         // NamedThreadFactory("NettyServerWorker",true));
-        EventLoopGroup bossGroup = new NioEventLoopGroup(1,
-                new NamedThreadFactory("NettyServerBoss", true));
-        EventLoopGroup workerGroup = new NioEventLoopGroup(0,
-                new NamedThreadFactory("NettyServerBoss", true));// 设置0表示CPU核心数目×2+1
+        bossGroup = new NioEventLoopGroup(1, new NamedThreadFactory(
+                "NettyServerBoss", true));
+        workerGroup = new NioEventLoopGroup(0, new NamedThreadFactory(
+                "NettyServerBoss", true));// 设置0表示CPU核心数目×2+1
         bootstrap = new ServerBootstrap();
         bootstrap.group(bossGroup, workerGroup).channel(
                 NioServerSocketChannel.class);
@@ -97,16 +101,17 @@ public class NettyServer extends AbstractServer {
                 pipeline.addLast(nettyHandler);
             }
         });
-
+        ChannelFuture channelFuture = bootstrap.bind(getBindAddress());
+        this.channel = channelFuture.channel();
     }
+
     /*
      * (non-Javadoc)
      * 
      * @see org.vrtech.transport.Server#isBound()
      */
     public boolean isBound() {
-        // TODO Auto-generated method stub
-        return false;
+        return this.channel.isOpen();
     }
 
     /*
@@ -115,8 +120,16 @@ public class NettyServer extends AbstractServer {
      * @see org.vrtech.transport.Server#getChannels()
      */
     public Collection<Channel> getChannels() {
-        // TODO Auto-generated method stub
-        return null;
+        Collection<Channel> chs = new HashSet<Channel>();
+        for (Channel channel : this.channels.values()) {
+            if (channel.isConnected()) {
+                chs.add(channel);
+            } else {
+                channels.remove(NetUtils.toAddressString(channel
+                        .getRemoteAddress()));
+            }
+        }
+        return chs;
     }
 
     /*
@@ -125,18 +138,7 @@ public class NettyServer extends AbstractServer {
      * @see org.vrtech.transport.Server#getChannel(java.net.InetSocketAddress)
      */
     public Channel getChannel(InetSocketAddress remoteAddress) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.vrtech.transport.Endpoint#send(java.lang.Object, boolean)
-     */
-    public void send(Object message, boolean sent) throws RemotingException {
-        // TODO Auto-generated method stub
-
+        return channels.get(NetUtils.toAddressString(remoteAddress));
     }
 
     /*
@@ -146,7 +148,44 @@ public class NettyServer extends AbstractServer {
      */
     @Override
     protected void doClose() throws Throwable {
-        // TODO Auto-generated method stub
+        try {
+            if (channel != null) {
+                // unbind.
+                channel.close();
+            }
+        } catch (Throwable e) {
+            logger.warn(e.getMessage(), e);
+        }
+        try {
+            Collection<Channel> channels = getChannels();
+            if (channels != null && channels.size() > 0) {
+                for (Channel channel : channels) {
+                    try {
+                        channel.close();
+                    } catch (Throwable e) {
+                        logger.warn(e.getMessage(), e);
+                    }
+                }
+            }
+        } catch (Throwable e) {
+            logger.warn(e.getMessage(), e);
+        }
+        try {
+            if (bootstrap != null) {
+                this.channel.close().awaitUninterruptibly();
+                this.bossGroup.shutdownGracefully();
+                this.workerGroup.shutdownGracefully();
+            }
+        } catch (Throwable e) {
+            logger.warn(e.getMessage(), e);
+        }
+        try {
+            if (channels != null) {
+                channels.clear();
+            }
+        } catch (Throwable e) {
+            logger.warn(e.getMessage(), e);
+        }
 
     }
 

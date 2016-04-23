@@ -13,28 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.vrtech.monkey.transport.netty;
+package pub.vrtech.common.annotation;
 
-import pub.vrtech.common.URL;
-import pub.vrtech.transport.ChannelHandler;
-import pub.vrtech.transport.RemotingException;
-import pub.vrtech.transport.Server;
-import pub.vrtech.transport.Transporter;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  *
- * Function description：
- * 
+ * Function description： 1.XXX 2.XXX
  * 
  * @author houge
  */
-public class NettyTransporter implements Transporter {
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE})
+public @interface Service {
 
-    public final static String NAME = "netty";
-    
-    
-    public Server bind(URL  url,ChannelHandler  handler) throws RemotingException{
-        return new NettyServer(url, handler);
-    }
+    /***
+     * 服务名称
+     * 
+     * @return
+     */
+    String name();
+
+    /***
+     * 服务URL路径
+     * 
+     * @return
+     */
+    String url();
 
 }

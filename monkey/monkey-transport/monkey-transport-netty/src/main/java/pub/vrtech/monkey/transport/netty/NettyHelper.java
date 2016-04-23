@@ -18,11 +18,10 @@ package pub.vrtech.monkey.transport.netty;
 import io.netty.util.internal.logging.AbstractInternalLogger;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
-
-import org.vrtech.common.logs.FormattingTuple;
-import org.vrtech.common.logs.Logger;
-import org.vrtech.common.logs.LoggerFactory;
-import org.vrtech.common.logs.MessageFormatter;
+import pub.vrtech.common.logs.FormattingTuple;
+import pub.vrtech.common.logs.Logger;
+import pub.vrtech.common.logs.LoggerFactory;
+import pub.vrtech.common.logs.MessageFormatter;
 
 /**
  *

@@ -13,28 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.vrtech.monkey.transport.netty;
+package pub.vrtech.transport;
 
-import pub.vrtech.common.URL;
-import pub.vrtech.transport.ChannelHandler;
-import pub.vrtech.transport.RemotingException;
-import pub.vrtech.transport.Server;
-import pub.vrtech.transport.Transporter;
+import java.io.IOException;
+
+import pub.vrtech.transport.buffer.ChannelBuffer;
 
 /**
  *
- * Function description：
- * 
+ * Function description： 1.协议编解码接口
  * 
  * @author houge
  */
-public class NettyTransporter implements Transporter {
+public interface Codec {
 
-    public final static String NAME = "netty";
-    
-    
-    public Server bind(URL  url,ChannelHandler  handler) throws RemotingException{
-        return new NettyServer(url, handler);
+    void encode(Channel channel, ChannelBuffer buffer, Object message)
+            throws IOException;
+
+    Object decode(Channel channel, ChannelBuffer buffer) throws IOException;
+
+    enum DecodeResult {
+        NEED_MORE_INPUT, SKIP_SOME_INPUT
     }
 
 }

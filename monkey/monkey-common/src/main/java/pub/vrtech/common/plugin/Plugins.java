@@ -13,28 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.vrtech.monkey.transport.netty;
-
-import pub.vrtech.common.URL;
-import pub.vrtech.transport.ChannelHandler;
-import pub.vrtech.transport.RemotingException;
-import pub.vrtech.transport.Server;
-import pub.vrtech.transport.Transporter;
+package pub.vrtech.common.plugin;
 
 /**
  *
- * Function description：
- * 
+ * Function description： 1.XXX 2.XXX
  * 
  * @author houge
  */
-public class NettyTransporter implements Transporter {
+public interface Plugins {
 
-    public final static String NAME = "netty";
-    
-    
-    public Server bind(URL  url,ChannelHandler  handler) throws RemotingException{
-        return new NettyServer(url, handler);
-    }
+    /***
+     * 加载插件
+     */
+    public void loadPlugin();
 
 }

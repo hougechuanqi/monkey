@@ -13,28 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.vrtech.monkey.transport.netty;
+package pub.vrtech.transport;
 
-import pub.vrtech.common.URL;
-import pub.vrtech.transport.ChannelHandler;
-import pub.vrtech.transport.RemotingException;
-import pub.vrtech.transport.Server;
-import pub.vrtech.transport.Transporter;
+import java.net.InetSocketAddress;
+import java.util.Collection;
 
 /**
  *
- * Function description：
- * 
+ * Function description： 1.XXX 2.XXX
  * 
  * @author houge
  */
-public class NettyTransporter implements Transporter {
+public interface Server extends Endpoint {
 
-    public final static String NAME = "netty";
-    
-    
-    public Server bind(URL  url,ChannelHandler  handler) throws RemotingException{
-        return new NettyServer(url, handler);
-    }
+    /***
+     * 
+     * @return
+     */
+    boolean isBound();
+
+    /***
+     * get channels
+     * 
+     * @return
+     */
+    Collection<Channel> getChannels();
+
+    /****
+     * get remote channel
+     * 
+     * @param remoteAddress
+     * @return
+     */
+    Channel getChannel(InetSocketAddress remoteAddress);
 
 }

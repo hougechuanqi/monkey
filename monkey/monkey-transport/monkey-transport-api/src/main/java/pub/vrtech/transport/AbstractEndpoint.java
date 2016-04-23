@@ -13,28 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.vrtech.monkey.transport.netty;
+package pub.vrtech.transport;
 
 import pub.vrtech.common.URL;
-import pub.vrtech.transport.ChannelHandler;
-import pub.vrtech.transport.RemotingException;
-import pub.vrtech.transport.Server;
-import pub.vrtech.transport.Transporter;
+import pub.vrtech.common.logs.Logger;
+import pub.vrtech.common.logs.LoggerFactory;
 
 /**
  *
- * Function description：
- * 
+ * Function description： 1.XXX 2.XXX
  * 
  * @author houge
  */
-public class NettyTransporter implements Transporter {
+public abstract class AbstractEndpoint extends AbstractPeer {
 
-    public final static String NAME = "netty";
-    
-    
-    public Server bind(URL  url,ChannelHandler  handler) throws RemotingException{
-        return new NettyServer(url, handler);
+    private final static Logger logger = LoggerFactory
+            .getLogger(AbstractEndpoint.class);
+
+    private Codec codec;
+
+    private int timeout;
+
+    private int connectTimeout;
+
+    /**
+     * @param url
+     * @param handler
+     */
+    public AbstractEndpoint(URL url, ChannelHandler handler) {
+        super(url, handler);
     }
 
+    public Codec getCodec() {
+        return codec;
+    }
+
+    
 }
