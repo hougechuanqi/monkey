@@ -32,7 +32,7 @@ import pub.vrtech.transport.transports.AbstractChannel;
 
 /**
  *
- * Function description： 1.XXX 2.XXX
+ * Function description： Netty Channel
  * 
  * @author houge
  */
