@@ -13,28 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.vrtech.transport;
+package pub.vrtech.protocol;
 
-import io.netty.buffer.ByteBuf;
-
-import java.io.IOException;
-import java.util.List;
+import pub.vrtech.transport.transports.Packet;
 
 /**
  *
- * Function description： 1.协议编解码接口
+ * Function description： 1.XXX 2.XXX
  * 
  * @author houge
  */
-public interface Codec {
+public class RedisCommand implements  Packet{
 
-    void encode(Channel channel, ByteBuf buffer, Object message)
-            throws IOException;
+    private final Object[] objects;
 
-    void decode(Channel channel, ByteBuf buffer, List<Object> out) throws IOException;
-
-    enum DecodeResult {
-        NEED_MORE_INPUT, SKIP_SOME_INPUT
+    public RedisCommand(Object[] objects) {
+        this.objects = objects;
     }
-
 }

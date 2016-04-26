@@ -1,4 +1,4 @@
-package org.monkey.rpc.api;
+package pub.vrrech.monkey.rpc.api;
 
 /**
  * Hello world!

@@ -32,6 +32,8 @@
 		<log4j_version>1.2.16</log4j_version>
 		<logback_version>1.0.6</logback_version>
 		<javassist_version>3.15.0-GA</javassist_version>
+		<!-- serialize -->
+		<fastjson_version>1.2.9</fastjson_version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -142,6 +144,12 @@
 				<groupId>org.javassist</groupId>
 				<artifactId>javassist</artifactId>
 				<version>${javassist_version}</version>
+			</dependency>
+			<!-- serialize -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${fastjson_version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

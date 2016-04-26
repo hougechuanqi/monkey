@@ -77,10 +77,6 @@ public class NettyServer extends AbstractServer {
     @Override
     protected void doOpen() throws Throwable {
         NettyHelper.setNettyLoggerFactory();// 设置日志托管到自己的日志系统
-        // ExecutorService boss=Executors.newCachedThreadPool(new
-        // NamedThreadFactory("NettyServerBoss",true));
-        // ExecutorService worker=Executors.newCachedThreadPool(new
-        // NamedThreadFactory("NettyServerWorker",true));
         bossGroup = new NioEventLoopGroup(1, new NamedThreadFactory(
                 "NettyServerBoss", true));
         workerGroup = new NioEventLoopGroup(0, new NamedThreadFactory(

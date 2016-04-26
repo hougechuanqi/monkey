@@ -13,28 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.vrtech.transport;
-
-import io.netty.buffer.ByteBuf;
-
-import java.io.IOException;
-import java.util.List;
+package pub.vrtech.transport.transports;
 
 /**
  *
- * Function description： 1.协议编解码接口
+ * Function description： 1.XXX 2.XXX
  * 
  * @author houge
  */
-public interface Codec {
+public enum CodecType {
 
-    void encode(Channel channel, ByteBuf buffer, Object message)
-            throws IOException;
+    MONKEY(0, "monkey protocol"),
 
-    void decode(Channel channel, ByteBuf buffer, List<Object> out) throws IOException;
+    REDIS(1, "redis protocol"),
 
-    enum DecodeResult {
-        NEED_MORE_INPUT, SKIP_SOME_INPUT
+    ;
+
+    private final int id;
+    private final String desc;
+
+    private CodecType(final int id, final String desc) {
+        this.id = id;
+        this.desc = desc;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getDesc() {
+        return desc;
     }
 
 }

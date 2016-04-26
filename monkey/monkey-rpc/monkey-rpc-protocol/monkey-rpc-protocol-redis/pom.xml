@@ -9,5 +9,10 @@
 	<artifactId>monkey-rpc-protocol-redis</artifactId>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.vrtech.monkey</groupId>
+			<artifactId>monkey-transport-api</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
 	</dependencies>
 </project>

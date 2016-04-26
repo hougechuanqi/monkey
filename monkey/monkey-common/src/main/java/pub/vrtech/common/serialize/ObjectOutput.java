@@ -13,28 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.vrtech.transport;
-
-import io.netty.buffer.ByteBuf;
+package pub.vrtech.common.serialize;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  *
- * Function description： 1.协议编解码接口
+ * Function description： 1.XXX 2.XXX
  * 
  * @author houge
  */
-public interface Codec {
+public interface ObjectOutput extends DataOutput {
 
-    void encode(Channel channel, ByteBuf buffer, Object message)
-            throws IOException;
-
-    void decode(Channel channel, ByteBuf buffer, List<Object> out) throws IOException;
-
-    enum DecodeResult {
-        NEED_MORE_INPUT, SKIP_SOME_INPUT
-    }
+    /**
+     * write object.
+     * 
+     * @param obj
+     *            object.
+     */
+    void writeObject(Object obj) throws IOException;
 
 }
