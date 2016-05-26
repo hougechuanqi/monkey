@@ -17,7 +17,7 @@ package pub.vrtech.protocol;
 
 /**
  *
- * Function description： 1.XXX 2.XXX
+ * Function description： 
  * 
  * @author houge
  */
