@@ -25,7 +25,7 @@ package pub.vrtech.protocol;
  * 
  * @author houge
  */
-public enum RESPType {
+public enum RespType {
 
     STRING(0, "+"),
 
@@ -43,7 +43,7 @@ public enum RESPType {
 
     private final String desc;
 
-    private RESPType(final int id, final String desc) {
+    private RespType(final int id, final String desc) {
         this.id = id;
         this.desc = desc;
     }

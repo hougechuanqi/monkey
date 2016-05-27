@@ -21,12 +21,19 @@ package pub.vrtech.protocol;
  * 
  * @author houge
  */
-public class RedisProtocolCommon {
+public interface IRedisProtocol {
 
     /***
      * redis procotol terminated string
      */
     public final static String TERMINATED_STR = "\r\n";
+    
+    public static final byte CR = '\r';
+    public static final byte LF = '\n';
+    public  static final byte ZERO = '0';
+    public static final byte ARRAY_START = '*';
+
+    public static final byte ARGS_START = '$';
     
     
 

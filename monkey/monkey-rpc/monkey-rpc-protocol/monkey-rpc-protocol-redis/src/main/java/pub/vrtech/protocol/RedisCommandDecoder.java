@@ -30,14 +30,7 @@ import pub.vrtech.transport.transports.CodecType;
  * redis协议不支持inline，只是支持multibulk
  * @author houge
  */
-public class RedisCommandDecoder extends AbstractCodec {
-
-    public static final byte CR = '\r';
-    public static final byte LF = '\n';
-    private static final byte ZERO = '0';
-    private static final byte ARRAY_START = '*';
-
-    private static final byte ARGS_START = '$';
+public class RedisCommandDecoder extends AbstractCodec implements IRedisProtocol {
 
     private byte[][] bytes;
     private int arguments = 0;
