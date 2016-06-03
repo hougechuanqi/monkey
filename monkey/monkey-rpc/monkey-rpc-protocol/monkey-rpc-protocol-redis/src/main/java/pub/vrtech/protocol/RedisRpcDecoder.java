@@ -15,26 +15,37 @@
  */
 package pub.vrtech.protocol;
 
+import pub.vrrech.monkey.rpc.api.RpcDecoder;
+import pub.vrrech.monkey.rpc.api.RpcExchanger;
+import pub.vrtech.transport.Channel;
+import pub.vrtech.transport.transports.Packet;
+
 /**
  *
- * Function description： 
+ * 
+ * 
+ * 
+ * Function description： 1.XXX 2.XXX
  * 
  * @author houge
  */
-public interface IRedisProtocol {
+public class RedisRpcDecoder implements RpcDecoder {
 
-    /***
-     * 换行
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * pub.vrrech.monkey.rpc.api.RpcDecoder#decode(pub.vrtech.transport.Channel,
+     * java.lang.Object)
      */
-    public final static String TERMINATED_STR = "\r\n";
-    
-    public static final byte CR = '\r';
-    public static final byte LF = '\n';
+    @Override
+    public RpcExchanger decode(Channel channel, Packet msg) {
+        if (msg instanceof RedisCommand) {
+            
+            
 
-//    public static final byte ARRAY_START = '*';
-//
-//    public static final byte ARGS_START = '$';
-    
-    
+        }
+        return null;
+    }
 
 }

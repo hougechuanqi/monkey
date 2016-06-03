@@ -15,6 +15,10 @@
  */
 package pub.vrtech.protocol;
 
+import io.netty.buffer.ByteBuf;
+
+import com.google.common.base.Charsets;
+
 import pub.vrtech.transport.transports.Packet;
 
 /**
@@ -23,11 +27,49 @@ import pub.vrtech.transport.transports.Packet;
  * 
  * @author houge
  */
-public class RedisCommand implements  Packet{
+public class RedisCommand implements Packet {
 
-    private final Object[] objects;
+    public static final byte[] EMPTY_BYTES = new byte[0];
 
-    public RedisCommand(Object[] objects) {
-        this.objects = objects;
+    /****
+     * redis命令存储
+     */
+    private Object[] redisCommands;
+
+    public RedisCommand(Object[] redisCommands) {
+        this.redisCommands = redisCommands;
     }
+
+    public Object[] getRedisCommands() {
+        return redisCommands;
+    }
+
+    public void setRedisCommands(Object[] redisCommands) {
+        this.redisCommands = redisCommands;
+    }
+
+    /***
+     * 获得redis命令名称
+     * @return
+     */
+    public byte[] getName() {
+        return getBytes(redisCommands[0]);
+    }
+
+    private byte[] getBytes(Object object) {
+        byte[] argument;
+        if (object == null) {
+            argument = EMPTY_BYTES;
+        } else if (object instanceof byte[]) {
+            argument = (byte[]) object;
+        } else if (object instanceof ByteBuf) {
+            argument = ((ByteBuf) object).array();
+        } else if (object instanceof String) {
+            argument = ((String) object).getBytes(Charsets.UTF_8);
+        } else {
+            argument = object.toString().getBytes(Charsets.UTF_8);
+        }
+        return argument;
+    }
+
 }

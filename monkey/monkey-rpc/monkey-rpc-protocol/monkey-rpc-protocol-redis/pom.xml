@@ -14,5 +14,10 @@
 			<artifactId>monkey-transport-api</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.vrtech.monkey</groupId>
+			<artifactId>monkey-rpc-api</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.vrrech.monkey.rpc.api;
-
-import pub.vrtech.common.URL;
+package pub.vrtech.transport;
 
 /**
  *
@@ -24,11 +22,8 @@ import pub.vrtech.common.URL;
  * 2.XXX
  * @author houge
  */
-public interface Invoker<T> {
+public interface Decodeable {
     
-    Class<T> getInterface();
-    
-    Result invoke(Invocation invocation);
+    public void decode() throws Exception;
 
-    URL getUrl();
 }

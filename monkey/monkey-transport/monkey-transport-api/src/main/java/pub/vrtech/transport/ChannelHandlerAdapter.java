@@ -13,22 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.vrrech.monkey.rpc.api;
-
-import pub.vrtech.common.URL;
+package pub.vrtech.transport;
 
 /**
  *
- * Function description：
- * 1.XXX
- * 2.XXX
+ * Function description： 1.XXX 2.XXX
+ * 
  * @author houge
  */
-public interface Invoker<T> {
-    
-    Class<T> getInterface();
-    
-    Result invoke(Invocation invocation);
+public class ChannelHandlerAdapter implements ChannelHandler {
 
-    URL getUrl();
+    public void connected(Channel channel) throws RemotingException {
+    }
+
+    public void disconnected(Channel channel) throws RemotingException {
+    }
+
+    public void sent(Channel channel, Object message) throws RemotingException {
+    }
+
+    public void received(Channel channel, Object message)
+            throws RemotingException {
+    }
+
+    public void caught(Channel channel, Throwable exception)
+            throws RemotingException {
+    }
+
 }

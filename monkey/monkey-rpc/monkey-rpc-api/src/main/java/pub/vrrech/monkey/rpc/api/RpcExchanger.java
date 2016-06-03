@@ -15,8 +15,6 @@
  */
 package pub.vrrech.monkey.rpc.api;
 
-import pub.vrtech.common.URL;
-
 /**
  *
  * Function description：
@@ -24,11 +22,6 @@ import pub.vrtech.common.URL;
  * 2.XXX
  * @author houge
  */
-public interface Invoker<T> {
-    
-    Class<T> getInterface();
-    
-    Result invoke(Invocation invocation);
+public interface RpcExchanger {
 
-    URL getUrl();
 }

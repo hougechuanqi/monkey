@@ -15,20 +15,17 @@
  */
 package pub.vrrech.monkey.rpc.api;
 
-import pub.vrtech.common.URL;
+import pub.vrtech.transport.Channel;
+import pub.vrtech.transport.transports.Packet;
 
 /**
  *
- * Function description：
- * 1.XXX
- * 2.XXX
+ * Function description： 1.XXX 2.XXX
+ * 
  * @author houge
  */
-public interface Invoker<T> {
+public interface RpcDecoder {
     
-    Class<T> getInterface();
-    
-    Result invoke(Invocation invocation);
+    public RpcExchanger decode(Channel channel, Packet msg);
 
-    URL getUrl();
 }

@@ -27,33 +27,47 @@ package pub.vrtech.protocol;
  */
 public enum RespType {
 
-    STRING(0, "+"),
+    /***
+     * 单行
+     */
+    STRING(0, (byte)'+'),
+    /***
+     * 错误消息
+     */
+    ERRORS(1, (byte)'-'),
 
-    ERRORS(1, "-"),
+    /***
+     * 整形数字
+     */
+    INTEGERS(2, (byte)':'),
 
-    INTEGERS(2, ":"),
+    /***
+     * 批量回复
+     */
+    BULK_STRING(3,(byte)'$'),
 
-    BULK_STRING(3, "$"),
-
-    ARRAY(4, "*"),
+    /***
+     * 多个批量回复
+     */
+    ARRAY(4, (byte)'*'),
 
     ;
 
     private final int id;
 
-    private final String desc;
+    private final byte flag;
 
-    private RespType(final int id, final String desc) {
+    private RespType(final int id, final byte flag) {
         this.id = id;
-        this.desc = desc;
+        this.flag = flag;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getDesc() {
-        return desc;
+    public byte getFlag() {
+        return flag;
     }
  
 }
