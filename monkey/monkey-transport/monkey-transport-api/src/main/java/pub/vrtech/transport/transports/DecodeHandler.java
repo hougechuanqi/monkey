@@ -20,6 +20,7 @@ import pub.vrtech.common.logs.LoggerFactory;
 import pub.vrtech.transport.AbstractChannelHandlerDelegate;
 import pub.vrtech.transport.Channel;
 import pub.vrtech.transport.ChannelHandler;
+import pub.vrtech.transport.Decodeable;
 import pub.vrtech.transport.RemotingException;
 
 /**
@@ -42,13 +43,13 @@ public class DecodeHandler extends AbstractChannelHandlerDelegate {
             decode(message);
         }
 
-        if (message instanceof Request) {
-            decode(((Request)message).getData());
-        }
-
-        if (message instanceof Response) {
-            decode( ((Response)message).getResult());
-        }
+//        if (message instanceof Request) {
+//            decode(((Request)message).getData());
+//        }
+//
+//        if (message instanceof Response) {
+//            decode( ((Response)message).getResult());
+//        }
 
         handler.received(channel, message);
     }
