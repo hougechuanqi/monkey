@@ -30,7 +30,7 @@ import pub.vrtech.transport.RemotingException;
  * 2.XXX
  * @author houge
  */
-public class DecodeHandler extends AbstractChannelHandlerDelegate {
+public abstract class DecodeHandler extends AbstractChannelHandlerDelegate {
 
     private static final Logger log = LoggerFactory.getLogger(DecodeHandler.class);
 
@@ -42,17 +42,9 @@ public class DecodeHandler extends AbstractChannelHandlerDelegate {
         if (message instanceof Decodeable) {
             decode(message);
         }
-
-//        if (message instanceof Request) {
-//            decode(((Request)message).getData());
-//        }
-//
-//        if (message instanceof Response) {
-//            decode( ((Response)message).getResult());
-//        }
-
         handler.received(channel, message);
     }
+    
 
     private void decode(Object message) {
         if (message != null && message instanceof Decodeable) {

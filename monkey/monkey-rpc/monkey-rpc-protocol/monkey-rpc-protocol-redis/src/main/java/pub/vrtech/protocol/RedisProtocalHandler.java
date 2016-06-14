@@ -13,19 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.vrtech.transport.transports;
+package pub.vrtech.protocol;
 
-import pub.vrtech.transport.ChannelHandler;
-
+import pub.vrtech.transport.ChannelHandlerAdapter;
 
 /**
  *
  * Function description：
- * 1.XXX
+ * 1.用于解析redis协议RPC过程
  * 2.XXX
  * @author houge
  */
-public interface ChannelHanlderDelegate extends ChannelHandler {
-    
-    public ChannelHandler getHandler();
+public class RedisProtocalHandler extends ChannelHandlerAdapter {
+
 }

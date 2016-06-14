@@ -15,10 +15,11 @@
  */
 package pub.vrtech.protocol;
 
+import org.apache.commons.codec.Charsets;
+
 import io.netty.buffer.ByteBuf;
-
-import com.google.common.base.Charsets;
-
+import pub.vrtech.common.utils.BytesUtils;
+import pub.vrtech.transport.Decodeable;
 import pub.vrtech.transport.transports.Packet;
 
 /**
@@ -27,7 +28,7 @@ import pub.vrtech.transport.transports.Packet;
  * 
  * @author houge
  */
-public class RedisCommand implements Packet {
+public class RedisCommand implements Decodeable {
 
     public static final byte[] EMPTY_BYTES = new byte[0];
 
@@ -35,6 +36,12 @@ public class RedisCommand implements Packet {
      * redis命令存储
      */
     private Object[] redisCommands;
+
+    private String name;
+
+    private String key;
+
+    private CommandType type;
 
     public RedisCommand(Object[] redisCommands) {
         this.redisCommands = redisCommands;
@@ -50,10 +57,15 @@ public class RedisCommand implements Packet {
 
     /***
      * 获得redis命令名称
+     * 
      * @return
      */
     public byte[] getName() {
         return getBytes(redisCommands[0]);
+    }
+    
+    public byte[] getKey(){
+        return getBytes(redisCommands[1]);
     }
 
     private byte[] getBytes(Object object) {
@@ -70,6 +82,19 @@ public class RedisCommand implements Packet {
             argument = object.toString().getBytes(Charsets.UTF_8);
         }
         return argument;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see pub.vrtech.transport.Decodeable#decode()
+     */
+    @Override
+    public void decode() throws Exception {
+        byte[] name = this.getName();
+        this.name = new String(BytesUtils.toLowerByte(name));
+        this.type = CommandType.getCmdType(this.name);
+        this.key =new String(BytesUtils.toLowerByte(this.getKey()));
     }
 
 }

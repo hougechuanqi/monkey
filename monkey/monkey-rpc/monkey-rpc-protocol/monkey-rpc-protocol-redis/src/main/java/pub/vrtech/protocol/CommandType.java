@@ -15,6 +15,9 @@
  */
 package pub.vrtech.protocol;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * Function description： 
@@ -305,10 +308,17 @@ public enum CommandType {
     
     private final int id;
     private final String desc;
+    
+    private final static Map<String,CommandType> name2Type=new HashMap<String,CommandType>();
 
     private CommandType(final int id, final String desc) {
         this.id = id;
         this.desc = desc;
+        init();
+    }
+    
+    private void init(){
+        CommandType.name2Type.put(desc, this);
     }
 
     public int getId() {
@@ -318,5 +328,10 @@ public enum CommandType {
     public String getDesc() {
         return desc;
     }
+    
+    public static CommandType getCmdType(String name){
+        return name2Type.get(name);
+    }
+    
 
 }
