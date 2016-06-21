@@ -15,15 +15,49 @@
  */
 package pub.vrtech.protocol;
 
+import java.nio.charset.Charset;
+
+import pub.vrrech.monkey.rpc.api.constants.RPCConstants;
+import pub.vrtech.transport.Channel;
 import pub.vrtech.transport.ChannelHandlerAdapter;
+import pub.vrtech.transport.RemotingException;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  *
- * Function description：
- * 1.用于解析redis协议RPC过程
- * 2.XXX
+ * Function description： 1.用于解析redis协议RPC过程 2.XXX
+ * 
  * @author houge
  */
 public class RedisProtocalHandler extends ChannelHandlerAdapter {
+
+    @Override
+    public void sent(Channel channel, Object message) throws RemotingException {
+        // TODO Auto-generated method stub
+        super.sent(channel, message);
+    }
+
+    @Override
+    public void received(Channel channel, Object message)
+            throws RemotingException {
+        if (message instanceof RedisCommand) {
+            RedisCommand cmd = (RedisCommand) message;
+            final String key = new String(cmd.getCmdKey(),
+                    Charset.forName("UTF-8"));
+            JSONObject jsonObject = JSON.parseObject(key);
+            final String url = (String) jsonObject.get(RPCConstants.url);
+            JSONObject paramsObject = (JSONObject) jsonObject.get(RPCConstants.params);
+            final String  method=(String) paramsObject.get(RPCConstants.method);
+            final JSONArray  jsonArray=(JSONArray) paramsObject.get(RPCConstants.argument);
+            final Object[] args=jsonArray.toArray();
+            
+
+        }else{
+            throw new RemotingException(channel,"Redis协议解析错误,非RedisCommand格式");
+        }
+    }
 
 }

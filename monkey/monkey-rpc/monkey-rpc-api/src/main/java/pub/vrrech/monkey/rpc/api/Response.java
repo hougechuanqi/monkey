@@ -13,11 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vtech.common.test;
-
-import org.junit.Test;
-
-import pub.vrtech.common.serialize.support.json.FastJsonSerialization;
+package pub.vrrech.monkey.rpc.api;
 
 /**
  *
@@ -26,11 +22,11 @@ import pub.vrtech.common.serialize.support.json.FastJsonSerialization;
  * 2.XXX
  * @author houge
  */
-public class ApplicationContextTest {
-
-    @Test
-    public void test() {
-        
-    }
+public class Response {
+    
+    
+    
+    
+    
 
 }

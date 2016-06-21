@@ -8,6 +8,7 @@ import pub.vrtech.common.URL;
 import pub.vrtech.common.serialize.ObjectInput;
 import pub.vrtech.common.serialize.ObjectOutput;
 import pub.vrtech.common.serialize.Serialization;
+import pub.vrtech.common.serialize.SerializationTypes;
 
 
 /**
@@ -18,7 +19,7 @@ import pub.vrtech.common.serialize.Serialization;
 public class FastJsonSerialization implements Serialization {
 
     public byte getContentTypeId() {
-        return 6;
+        return SerializationTypes.JSON.getId();
     }
 
     public String getContentType() {

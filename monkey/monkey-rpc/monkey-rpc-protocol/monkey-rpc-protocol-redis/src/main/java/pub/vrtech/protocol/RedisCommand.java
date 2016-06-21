@@ -60,11 +60,11 @@ public class RedisCommand implements Decodeable {
      * 
      * @return
      */
-    public byte[] getName() {
+    public byte[] getCmdName() {
         return getBytes(redisCommands[0]);
     }
     
-    public byte[] getKey(){
+    public byte[] getCmdKey(){
         return getBytes(redisCommands[1]);
     }
 
@@ -91,10 +91,22 @@ public class RedisCommand implements Decodeable {
      */
     @Override
     public void decode() throws Exception {
-        byte[] name = this.getName();
+        byte[] name = this.getCmdName();
         this.name = new String(BytesUtils.toLowerByte(name));
         this.type = CommandType.getCmdType(this.name);
-        this.key =new String(BytesUtils.toLowerByte(this.getKey()));
+        this.key =new String(BytesUtils.toLowerByte(this.getCmdKey()));
+    }
+
+    public CommandType getType() {
+        return type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getKey() {
+        return key;
     }
 
 }

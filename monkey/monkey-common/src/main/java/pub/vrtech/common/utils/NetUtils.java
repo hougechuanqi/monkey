@@ -17,8 +17,14 @@ package pub.vrtech.common.utils;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.NetworkInterface;
 import java.net.UnknownHostException;
+import java.util.Enumeration;
 import java.util.regex.Pattern;
+
+import pub.vrtech.common.URL;
+import pub.vrtech.common.logs.Logger;
+import pub.vrtech.common.logs.LoggerFactory;
 
 /**
  *
@@ -27,6 +33,9 @@ import java.util.regex.Pattern;
  * @author houge
  */
 public class NetUtils {
+
+    private static final Logger logger = LoggerFactory
+            .getLogger(NetUtils.class);
 
     private static final Pattern LOCAL_IP_PATTERN = Pattern
             .compile("127(\\.\\d{1,3}){3}$");
@@ -104,21 +113,105 @@ public class NetUtils {
                 && !LOCALHOST.equals(name) && IP_PATTERN.matcher(name)
                 .matches());
     }
-    
+
     /**
      * @param hostName
-     * @return ip address or hostName if UnknownHostException 
+     * @return ip address or hostName if UnknownHostException
      */
     public static String getIpByHost(String hostName) {
-        try{
+        try {
             return InetAddress.getByName(hostName).getHostAddress();
-        }catch (UnknownHostException e) {
+        } catch (UnknownHostException e) {
             return hostName;
         }
     }
-    
+
     public static String toAddressString(InetSocketAddress address) {
         return address.getAddress().getHostAddress() + ":" + address.getPort();
     }
+
+    public static String getLocalHost() {
+        InetAddress address = getLocalAddress();
+        return address == null ? LOCALHOST : address.getHostAddress();
+    }
+
+    public static InetAddress getLocalAddress() {
+        if (LOCAL_ADDRESS != null)
+            return LOCAL_ADDRESS;
+        InetAddress localAddress = getLocalAddress0();
+        LOCAL_ADDRESS = localAddress;
+        return localAddress;
+    }
+
+    private static InetAddress getLocalAddress0() {
+        InetAddress localAddress = null;
+        try {
+            localAddress = InetAddress.getLocalHost();
+            if (isValidAddress(localAddress)) {
+                return localAddress;
+            }
+        } catch (Throwable e) {
+            logger.warn("Failed to retriving ip address, " + e.getMessage(), e);
+        }
+        try {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface
+                    .getNetworkInterfaces();
+            if (interfaces != null) {
+                while (interfaces.hasMoreElements()) {
+                    try {
+                        NetworkInterface network = interfaces.nextElement();
+                        Enumeration<InetAddress> addresses = network
+                                .getInetAddresses();
+                        if (addresses != null) {
+                            while (addresses.hasMoreElements()) {
+                                try {
+                                    InetAddress address = addresses
+                                            .nextElement();
+                                    if (isValidAddress(address)) {
+                                        return address;
+                                    }
+                                } catch (Throwable e) {
+                                    logger.warn(
+                                            "Failed to retriving ip address, "
+                                                    + e.getMessage(), e);
+                                }
+                            }
+                        }
+                    } catch (Throwable e) {
+                        logger.warn(
+                                "Failed to retriving ip address, "
+                                        + e.getMessage(), e);
+                    }
+                }
+            }
+        } catch (Throwable e) {
+            logger.warn("Failed to retriving ip address, " + e.getMessage(), e);
+        }
+        logger.error("Could not get local host ip address, will use 127.0.0.1 instead.");
+        return localAddress;
+    }
+    
+    public static String filterLocalHost(String host) {
+        if (host == null || host.length() == 0) {
+            return host;
+        }
+        if (host.contains("://")) {
+            URL u = URL.valueOf(host);
+            if (NetUtils.isInvalidLocalHost(u.getHost())) {
+                return u.setHost(NetUtils.getLocalHost()).toFullString();
+            }
+        } else if (host.contains(":")) {
+            int i = host.lastIndexOf(':');
+            if (NetUtils.isInvalidLocalHost(host.substring(0, i))) {
+                return NetUtils.getLocalHost() + host.substring(i);
+            }
+        } else {
+            if (NetUtils.isInvalidLocalHost(host)) {
+                return NetUtils.getLocalHost();
+            }
+        }
+        return host;
+    }
+
 
 }

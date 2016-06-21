@@ -29,6 +29,7 @@ import pub.vrtech.common.URL;
  */
 public class RpcInvocation implements Invocation,RpcExchanger {
 
+    @SuppressWarnings("unused")
     private static final long serialVersionUID = -4355285085441097045L;
 
     private String methodName;

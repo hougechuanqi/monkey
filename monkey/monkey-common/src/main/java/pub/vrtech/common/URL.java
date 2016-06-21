@@ -20,9 +20,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import pub.vrtech.common.utils.CollectionUtils;
@@ -44,10 +47,7 @@ public class URL implements Serializable {
     private final int port;
     private final String path;
     private final Map<String, String> parameters;
-    
-    
 
-    
     private volatile transient Map<String, Number> numbers;
 
     private volatile transient Map<String, URL> urls;
@@ -57,11 +57,11 @@ public class URL implements Serializable {
     private volatile transient String full;
 
     private volatile transient String identity;
-    
+
     private volatile transient String parameter;
 
     private volatile transient String string;
-    
+
     protected URL() {
         this.protocol = null;
         this.host = null;
@@ -256,7 +256,7 @@ public class URL implements Serializable {
         }
         return Boolean.parseBoolean(value);
     }
-    
+
     public int getParameter(String key, int defaultValue) {
         Number n = getNumbers().get(key);
         if (n != null) {
@@ -270,7 +270,7 @@ public class URL implements Serializable {
         getNumbers().put(key, i);
         return i;
     }
-    
+
     private Map<String, Number> getNumbers() {
         if (numbers == null) { // 允许并发重复创建
             numbers = new ConcurrentHashMap<String, Number>();
@@ -284,7 +284,7 @@ public class URL implements Serializable {
         }
         return urls;
     }
-    
+
     public String getParameter(String key, String defaultValue) {
         String value = getParameter(key);
         if (value == null || value.length() == 0) {
@@ -300,23 +300,19 @@ public class URL implements Serializable {
         }
         return value;
     }
-    
+
     public InetSocketAddress toInetSocketAddress() {
         return new InetSocketAddress(host, port);
     }
-    
+
     public String getHost() {
         return host;
     }
-    
+
     /**
      * 获取IP地址.
      * 
-     * 请注意：
-     * 如果和Socket的地址对比，
-     * 或用地址作为Map的Key查找，
-     * 请使用IP而不是Host，
-     * 否则配置域名会有问题
+     * 请注意： 如果和Socket的地址对比， 或用地址作为Map的Key查找， 请使用IP而不是Host， 否则配置域名会有问题
      * 
      * @return ip
      */
@@ -326,11 +322,11 @@ public class URL implements Serializable {
         }
         return ip;
     }
-    
+
     public int getPort() {
         return port;
     }
-    
+
     public int getPositiveParameter(String key, int defaultValue) {
         if (defaultValue <= 0) {
             throw new IllegalArgumentException("defaultValue <= 0");
@@ -342,4 +338,131 @@ public class URL implements Serializable {
         return value;
     }
 
+    public URL setHost(String host) {
+        return new URL(protocol, host, port, path, getParameters());
+    }
+
+    public Map<String, String> getParameters() {
+        return parameters;
+    }
+
+    public String toFullString() {
+        if (full != null) {
+            return full;
+        }
+        return full = buildString(true, true);
+    }
+    private String buildString(boolean appendUser, boolean appendParameter,
+            String... parameters) {
+        return buildString(appendUser, appendParameter, false, false,
+                parameters);
+    }
+    private String buildString(boolean appendUser, boolean appendParameter,
+            boolean useIP, boolean useService, String... parameters) {
+        StringBuilder buf = new StringBuilder();
+        if (protocol != null && protocol.length() > 0) {
+            buf.append(protocol);
+            buf.append("://");
+        }
+        String host;
+        if (useIP) {
+            host = getIp();
+        } else {
+            host = getHost();
+        }
+        if (host != null && host.length() > 0) {
+            buf.append(host);
+            if (port > 0) {
+                buf.append(":");
+                buf.append(port);
+            }
+        }
+        String path;
+        if (useService) {
+            path = getServiceKey();
+        } else {
+            path = getPath();
+        }
+        if (path != null && path.length() > 0) {
+            buf.append("/");
+            buf.append(path);
+        }
+        if (appendParameter) {
+            buildParameters(buf, true, parameters);
+        }
+        return buf.toString();
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public String getServiceInterface() {
+        return getParameter(Constants.INTERFACE_KEY, path);
+    }
+
+    public URL setServiceInterface(String service) {
+        return addParameter(Constants.INTERFACE_KEY, service);
+    }
+    public URL addParameter(String key, String value) {
+        if (key == null || key.length() == 0 || value == null
+                || value.length() == 0) {
+            return this;
+        }
+        // 如果没有修改，直接返回。
+        if (value.equals(getParameters().get(key))) { // value != null
+            return this;
+        }
+
+        Map<String, String> map = new HashMap<String, String>(getParameters());
+        map.put(key, value);
+        return new URL(protocol, host, port, path, map);
+    }
+
+    public String getServiceKey() {
+        String inf = getServiceInterface();
+        if (inf == null)
+            return null;
+        StringBuilder buf = new StringBuilder();
+        String group = getParameter(Constants.GROUP_KEY);
+        if (group != null && group.length() > 0) {
+            buf.append(group).append("/");
+        }
+        buf.append(inf);
+        String version = getParameter(Constants.VERSION_KEY);
+        if (version != null && version.length() > 0) {
+            buf.append(":").append(version);
+        }
+        return buf.toString();
+    }
+
+    private void buildParameters(StringBuilder buf, boolean concat,
+            String[] parameters) {
+        if (getParameters() != null && getParameters().size() > 0) {
+            List<String> includes = (parameters == null
+                    || parameters.length == 0 ? null : Arrays
+                    .asList(parameters));
+            boolean first = true;
+            for (Map.Entry<String, String> entry : new TreeMap<String, String>(
+                    getParameters()).entrySet()) {
+                if (entry.getKey() != null
+                        && entry.getKey().length() > 0
+                        && (includes == null || includes.contains(entry
+                                .getKey()))) {
+                    if (first) {
+                        if (concat) {
+                            buf.append("?");
+                        }
+                        first = false;
+                    } else {
+                        buf.append("&");
+                    }
+                    buf.append(entry.getKey());
+                    buf.append("=");
+                    buf.append(entry.getValue() == null ? "" : entry.getValue()
+                            .trim());
+                }
+            }
+        }
+    }
 }

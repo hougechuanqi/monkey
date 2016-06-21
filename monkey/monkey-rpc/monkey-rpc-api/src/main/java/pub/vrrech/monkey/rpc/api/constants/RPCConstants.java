@@ -13,24 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vtech.common.test;
-
-import org.junit.Test;
-
-import pub.vrtech.common.serialize.support.json.FastJsonSerialization;
+package pub.vrrech.monkey.rpc.api.constants;
 
 /**
  *
- * Function description：
- * 1.XXX
- * 2.XXX
+ * Function description： 1.XXX 2.XXX
+ * 
  * @author houge
  */
-public class ApplicationContextTest {
-
-    @Test
-    public void test() {
-        
-    }
-
+public class RPCConstants {
+    public final static String url = "url";
+    public final static String params = "params";
+    public final static String method = "method";
+    public final static String argument = "args";
 }

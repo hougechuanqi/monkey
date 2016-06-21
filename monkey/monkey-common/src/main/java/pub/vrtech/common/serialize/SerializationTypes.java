@@ -13,24 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vtech.common.test;
-
-import org.junit.Test;
-
-import pub.vrtech.common.serialize.support.json.FastJsonSerialization;
+package pub.vrtech.common.serialize;
 
 /**
  *
- * Function description：
- * 1.XXX
- * 2.XXX
+ * 序列化类型 Function description： 1.XXX 2.XXX
+ * 
  * @author houge
  */
-public class ApplicationContextTest {
+public enum SerializationTypes {
 
-    @Test
-    public void test() {
-        
+    JSON((byte) 0, "JSON"),
+    GOOGLE_PROTO((byte) 1, "google protobuffer"), 
+    MESSAGE_PACK((byte) 2, "message pack"), 
+    THRIFT((byte) 3, "thrift"), 
+    NATIVE((byte) 4, "java native"), ;
+    
+    private final byte id;
+    private final String desc;
+    private SerializationTypes(final byte id, final String desc) {
+        this.id = id;
+        this.desc = desc;
     }
-
+    public byte getId() {
+        return id;
+    }
+    public String getDesc() {
+        return desc;
+    }
 }
