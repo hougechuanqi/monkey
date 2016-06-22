@@ -44,9 +44,9 @@ public class Constants {
 
     public static final String  DYNAMIC_KEY                        = "dynamic";
 
-    public static final String  DUBBO_PROPERTIES_KEY               = "dubbo.properties.file";
-
-    public static final String  DEFAULT_DUBBO_PROPERTIES           = "dubbo.properties";
+//    public static final String  DUBBO_PROPERTIES_KEY               = "dubbo.properties.file";
+//
+//    public static final String  DEFAULT_DUBBO_PROPERTIES           = "dubbo.properties";
 
     public static final String  SENT_KEY                           = "sent";
 

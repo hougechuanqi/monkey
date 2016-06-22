@@ -419,6 +419,28 @@ public class URL implements Serializable {
         return new URL(protocol, host, port, path, map);
     }
 
+    public int getMethodParameter(String method, String key, int defaultValue) {
+        String methodKey = method + "." + key;
+        Number n = getNumbers().get(methodKey);
+        if (n != null) {
+            return n.intValue();
+        }
+        String value = getMethodParameter(method, key);
+        if (value == null || value.length() == 0) {
+            return defaultValue;
+        }
+        int i = Integer.parseInt(value);
+        getNumbers().put(methodKey, i);
+        return i;
+    }
+    public String getMethodParameter(String method, String key) {
+        String value = parameters.get(method + "." + key);
+        if (value == null || value.length() == 0) {
+            return getParameter(key);
+        }
+        return value;
+    }
+
     public String getServiceKey() {
         String inf = getServiceInterface();
         if (inf == null)
