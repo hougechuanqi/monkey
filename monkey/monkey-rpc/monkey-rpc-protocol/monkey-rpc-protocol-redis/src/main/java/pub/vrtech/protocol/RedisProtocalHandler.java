@@ -18,9 +18,14 @@ package pub.vrtech.protocol;
 import java.nio.charset.Charset;
 
 import pub.vrrech.monkey.rpc.api.constants.RPCConstants;
+import pub.vrtech.common.URL;
+import pub.vrtech.common.protocol.Protocol;
+import pub.vrtech.transport.AbstractChannelHandlerDelegate;
 import pub.vrtech.transport.Channel;
+import pub.vrtech.transport.ChannelHandler;
 import pub.vrtech.transport.ChannelHandlerAdapter;
 import pub.vrtech.transport.RemotingException;
+import pub.vrtech.transport.transports.ProtocalTransfor;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -32,12 +37,13 @@ import com.alibaba.fastjson.JSONObject;
  * 
  * @author houge
  */
-public class RedisProtocalHandler extends ChannelHandlerAdapter {
+public class RedisProtocalHandler extends AbstractChannelHandlerDelegate {
 
-    @Override
-    public void sent(Channel channel, Object message) throws RemotingException {
-        // TODO Auto-generated method stub
-        super.sent(channel, message);
+    /**
+     * @param handler
+     */
+    protected RedisProtocalHandler(ChannelHandler handler) {
+        super(handler);
     }
 
     @Override
@@ -49,14 +55,18 @@ public class RedisProtocalHandler extends ChannelHandlerAdapter {
                     Charset.forName("UTF-8"));
             JSONObject jsonObject = JSON.parseObject(key);
             final String url = (String) jsonObject.get(RPCConstants.url);
-            JSONObject paramsObject = (JSONObject) jsonObject.get(RPCConstants.params);
-            final String  method=(String) paramsObject.get(RPCConstants.method);
-            final JSONArray  jsonArray=(JSONArray) paramsObject.get(RPCConstants.argument);
-            final Object[] args=jsonArray.toArray();
+            JSONObject paramsObject = (JSONObject) jsonObject
+                    .get(RPCConstants.params);
+            final String method = (String) paramsObject
+                    .get(RPCConstants.method);
+            final JSONArray jsonArray = (JSONArray) paramsObject
+                    .get(RPCConstants.argument);
+            final Object[] args = jsonArray.toArray();
+            URL requetUrl = URL.valueOf(url);// redis://192.168.1.10:8080/service/getMyholder?timeout=30
             
 
-        }else{
-            throw new RemotingException(channel,"Redis协议解析错误,非RedisCommand格式");
+        } else {
+            throw new RemotingException(channel, "Redis协议解析错误,非RedisCommand格式");
         }
     }
 
