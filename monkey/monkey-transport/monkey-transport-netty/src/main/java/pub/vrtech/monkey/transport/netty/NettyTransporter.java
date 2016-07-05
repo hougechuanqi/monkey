@@ -17,8 +17,10 @@ package pub.vrtech.monkey.transport.netty;
 
 import pub.vrtech.common.URL;
 import pub.vrtech.transport.ChannelHandler;
+import pub.vrtech.transport.Client;
 import pub.vrtech.transport.RemotingException;
 import pub.vrtech.transport.Server;
+import pub.vrtech.transport.TransportTypes;
 import pub.vrtech.transport.Transporter;
 
 /**
@@ -30,11 +32,36 @@ import pub.vrtech.transport.Transporter;
  */
 public class NettyTransporter implements Transporter {
 
-    public final static String NAME = "netty";
-    
-    
-    public Server bind(URL  url,ChannelHandler  handler) throws RemotingException{
-        return new NettyServer(url, handler);
+    /*
+     * (non-Javadoc)
+     * 
+     * @see pub.vrtech.transport.Transporter#getTransportType()
+     */
+    public TransportTypes getTransportType() {
+        return TransportTypes.NETTY;
     }
-    
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see pub.vrtech.transport.Transporter#bind(java.lang.String,
+     * pub.vrtech.transport.ChannelHandler)
+     */
+    public Server bind(String url, ChannelHandler listener)
+            throws RemotingException {
+        // TODO Auto-generated method stub
+        return new NettyServer(URL.valueOf(url), listener);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see pub.vrtech.transport.Transporter#connect(java.lang.String,
+     * pub.vrtech.transport.ChannelHandler)
+     */
+    public Client connect(String url, ChannelHandler listener) {
+        // TODO Auto-generated method stub
+        return new NettyClient(URL.valueOf(url), listener);
+    }
+
 }

@@ -13,7 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.vrtech.transport;
+package pub.vrtech.monkey.transport.netty;
+
+import pub.vrtech.common.URL;
+import pub.vrtech.transport.ChannelHandler;
+import pub.vrtech.transport.transports.AbstractClient;
 
 /**
  *
@@ -21,37 +25,15 @@ package pub.vrtech.transport;
  * 
  * @author houge
  */
-public interface Transporter {
+public class NettyClient extends AbstractClient {
 
-    /***
-     * 获得transport类型
-     * 
-     * @return
-     */
-    public TransportTypes getTransportType();
-
-    /***
-     * 服务器绑定本地服务端口号
-     * 
+    /**
      * @param url
-     *            绑定URL地址
      * @param handler
-     *            IO处理handler
-     * @return
-     * @throws RemotingException
      */
-    public Server bind(String url, ChannelHandler handler)
-            throws RemotingException;
-
-    /***
-     * 客户端连接服务器
-     * 
-     * @param url
-     *            连接URL地址
-     * @param handler
-     *            IO处理handler
-     * @return
-     */
-    public Client connect(String url, ChannelHandler handler);
+    public NettyClient(URL url, ChannelHandler handler) {
+        super(url, handler);
+        // TODO Auto-generated constructor stub
+    }
 
 }

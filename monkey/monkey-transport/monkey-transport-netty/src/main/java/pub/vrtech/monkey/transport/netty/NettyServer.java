@@ -40,7 +40,8 @@ import pub.vrtech.transport.transports.AbstractServer;
 
 /**
  *
- * Function description： 1.netty server
+ * Function description：
+ *  1.netty server
  * 
  * @author houge
  */
