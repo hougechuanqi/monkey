@@ -23,9 +23,9 @@ package pub.vrtech.common.protocol;
  */
 public enum Protocol {
 
-    REDIS(0, "Redis protocol"),
+    REDIS(0, "redis"),
 
-    BINARY(1, "Binary protocol"),
+    BINARY(1, "binary"),
 
     ;
     private final int id;
@@ -40,7 +40,13 @@ public enum Protocol {
     public String getDesc() {
         return desc;
     }
-    
-    
+
+    public static Protocol getProtocol(final String protocol) {
+        for (Protocol pro : Protocol.values()) {
+            if (pro.getDesc().equals(protocol))
+                return pro;
+        }
+        return Protocol.REDIS;
+    }
 
 }

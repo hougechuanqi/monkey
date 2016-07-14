@@ -38,8 +38,14 @@ import pub.vrtech.transport.transports.AbstractChannel;
  */
 public class NettyChannel extends AbstractChannel {
 
+    /***
+     * logger 
+     */
     private static final Logger logger = LoggerFactory
             .getLogger(NettyChannel.class);
+    /***
+     * 
+     */
     private static final ConcurrentHashMap<io.netty.channel.Channel, NettyChannel> channelMap = new ConcurrentHashMap<Channel, NettyChannel>();
 
     private final io.netty.channel.Channel channel;
@@ -90,7 +96,12 @@ public class NettyChannel extends AbstractChannel {
     public boolean isConnected() {
         return channel.isActive();
     }
-
+    
+    /***
+     * 是否同步发送消息
+     * @param  message  待发送消息体
+     * @param  sent   是否同步发送
+     */
     public void send(Object message, boolean sent) throws RemotingException {
         super.send(message, sent);
 
@@ -156,7 +167,6 @@ public class NettyChannel extends AbstractChannel {
 
     public void setAttribute(String key, Object value) {
         if (value == null) { // The null value unallowed in the
-                             // ConcurrentHashMap.
             attributes.remove(key);
         } else {
             attributes.put(key, value);

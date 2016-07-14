@@ -16,7 +16,9 @@
 package pub.vrtech.monkey.transport.netty;
 
 import pub.vrtech.common.URL;
+import pub.vrtech.transport.Channel;
 import pub.vrtech.transport.ChannelHandler;
+import pub.vrtech.transport.RemotingException;
 import pub.vrtech.transport.transports.AbstractClient;
 
 /**
@@ -27,13 +29,61 @@ import pub.vrtech.transport.transports.AbstractClient;
  */
 public class NettyClient extends AbstractClient {
 
+
     /**
      * @param url
      * @param handler
+     * @throws RemotingException
      */
-    public NettyClient(URL url, ChannelHandler handler) {
+    public NettyClient(URL url, ChannelHandler handler)
+            throws RemotingException {
         super(url, handler);
         // TODO Auto-generated constructor stub
+    }
+
+    /* (non-Javadoc)
+     * @see pub.vrtech.transport.transports.AbstractClient#doOpen()
+     */
+    @Override
+    protected void doOpen() throws Throwable {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /* (non-Javadoc)
+     * @see pub.vrtech.transport.transports.AbstractClient#doClose()
+     */
+    @Override
+    protected void doClose() throws Throwable {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /* (non-Javadoc)
+     * @see pub.vrtech.transport.transports.AbstractClient#doConnect()
+     */
+    @Override
+    protected void doConnect() throws Throwable {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /* (non-Javadoc)
+     * @see pub.vrtech.transport.transports.AbstractClient#doDisConnect()
+     */
+    @Override
+    protected void doDisConnect() throws Throwable {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /* (non-Javadoc)
+     * @see pub.vrtech.transport.transports.AbstractClient#getChannel()
+     */
+    @Override
+    protected Channel getChannel() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

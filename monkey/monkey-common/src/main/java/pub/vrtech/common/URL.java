@@ -28,24 +28,43 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
+import pub.vrtech.common.protocol.Protocol;
 import pub.vrtech.common.utils.CollectionUtils;
 import pub.vrtech.common.utils.NetUtils;
 
 /**
  *
- * Function description：
- * 
+ * Function description： URL 应用内统一资源定位
+ * redis://182.168.0.4:8080/person/findPerson?timeout=1000&processTimeout=1000
  * 
  * @author houge
  */
 public class URL implements Serializable {
 
+    /***
+     * serializableVersion
+     */
     private static final long serialVersionUID = 4788299525631405420L;
 
-    private final String protocol;
+    /****
+     * 协议
+     */
+    private final Protocol protocol;
+    /***
+     * 主机
+     */
     private final String host;
+    /***
+     * 端口号
+     */
     private final int port;
+    /***
+     * 路径(服务路径)
+     */
     private final String path;
+    /***
+     * 请求参数
+     */
     private final Map<String, String> parameters;
 
     private volatile transient Map<String, Number> numbers;
@@ -56,12 +75,6 @@ public class URL implements Serializable {
 
     private volatile transient String full;
 
-    private volatile transient String identity;
-
-    private volatile transient String parameter;
-
-    private volatile transient String string;
-
     protected URL() {
         this.protocol = null;
         this.host = null;
@@ -70,29 +83,29 @@ public class URL implements Serializable {
         this.parameters = null;
     }
 
-    public URL(String protocol, String host, int port) {
+    public URL(Protocol protocol, String host, int port) {
         this(protocol, host, port, null, (Map<String, String>) null);
     }
 
-    public URL(String protocol, String host, int port, String[] pairs) { // 变长参数...与下面的path参数冲突，改为数组
+    public URL(Protocol protocol, String host, int port, String[] pairs) { // 变长参数...与下面的path参数冲突，改为数组
         this(protocol, host, port, null, CollectionUtils.toStringMap(pairs));
     }
 
-    public URL(String protocol, String host, int port,
+    public URL(Protocol protocol, String host, int port,
             Map<String, String> parameters) {
         this(protocol, host, port, null, parameters);
     }
 
-    public URL(String protocol, String host, int port, String path) {
+    public URL(Protocol protocol, String host, int port, String path) {
         this(protocol, host, port, path, (Map<String, String>) null);
     }
 
-    public URL(String protocol, String host, int port, String path,
+    public URL(Protocol protocol, String host, int port, String path,
             String... pairs) {
         this(protocol, host, port, path, CollectionUtils.toStringMap(pairs));
     }
 
-    public URL(String protocol, String host, int port, String path,
+    public URL(Protocol protocol, String host, int port, String path,
             Map<String, String> parameters) {
         this.protocol = protocol;
         this.host = host;
@@ -122,7 +135,7 @@ public class URL implements Serializable {
         if (url == null || (url = url.trim()).length() == 0) {
             throw new IllegalArgumentException("url == null");
         }
-        String protocol = null;
+        Protocol protocol = null;
         String host = null;
         int port = 0;
         String path = null;
@@ -150,7 +163,7 @@ public class URL implements Serializable {
             if (i == 0)
                 throw new IllegalStateException("url missing protocol: \""
                         + url + "\"");
-            protocol = url.substring(0, i);
+            protocol = Protocol.getProtocol(url.substring(0, i));
             url = url.substring(i + 3);
         } else {
             // case: file:/path/to/file.txt
@@ -159,7 +172,7 @@ public class URL implements Serializable {
                 if (i == 0)
                     throw new IllegalStateException("url missing protocol: \""
                             + url + "\"");
-                protocol = url.substring(0, i);
+                protocol = Protocol.getProtocol(url.substring(0, i));
                 url = url.substring(i + 1);
             }
         }
@@ -360,8 +373,8 @@ public class URL implements Serializable {
     private String buildString(boolean appendUser, boolean appendParameter,
             boolean useIP, boolean useService, String... parameters) {
         StringBuilder buf = new StringBuilder();
-        if (protocol != null && protocol.length() > 0) {
-            buf.append(protocol);
+        if (protocol != null) {
+            buf.append(protocol.getDesc());
             buf.append("://");
         }
         String host;
@@ -486,5 +499,17 @@ public class URL implements Serializable {
                 }
             }
         }
+    }
+
+    public int getPort(int defaultPort) {
+        return port <= 0 ? defaultPort : port;
+    }
+
+    public String getAddress() {
+        return port <= 0 ? host : host + ":" + port;
+    }
+    
+    public Protocol getProtocol(){
+        return protocol;
     }
 }

@@ -49,7 +49,6 @@ public class NettyTransporter implements Transporter {
      */
     public Server bind(String url, ChannelHandler listener)
             throws RemotingException {
-        // TODO Auto-generated method stub
         return new NettyServer(URL.valueOf(url), listener);
     }
 
@@ -59,8 +58,7 @@ public class NettyTransporter implements Transporter {
      * @see pub.vrtech.transport.Transporter#connect(java.lang.String,
      * pub.vrtech.transport.ChannelHandler)
      */
-    public Client connect(String url, ChannelHandler listener) {
-        // TODO Auto-generated method stub
+    public Client connect(String url, ChannelHandler listener) throws RemotingException {
         return new NettyClient(URL.valueOf(url), listener);
     }
 

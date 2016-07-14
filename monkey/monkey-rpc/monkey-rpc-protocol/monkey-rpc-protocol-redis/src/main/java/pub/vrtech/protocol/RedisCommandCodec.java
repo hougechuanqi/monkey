@@ -31,7 +31,7 @@ import pub.vrtech.transport.transports.CodecType;
  * 
  * @author houge
  */
-public class RedisCommandDecoder extends AbstractCodec
+public class RedisCommandCodec extends AbstractCodec
         implements
             IRedisProtocol {
 
@@ -44,7 +44,7 @@ public class RedisCommandDecoder extends AbstractCodec
     /**
      * @param codecType
      */
-    public RedisCommandDecoder() {
+    public RedisCommandCodec() {
         super(CodecType.REDIS);
     }
 
@@ -133,6 +133,7 @@ public class RedisCommandDecoder extends AbstractCodec
     @Override
     protected void doEncode(Channel channel, ByteBuf buffer, Object message)
             throws IOException {
+        
 
     }
 

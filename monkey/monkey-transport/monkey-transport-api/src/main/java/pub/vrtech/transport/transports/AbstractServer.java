@@ -17,7 +17,6 @@ package pub.vrtech.transport.transports;
 
 import java.net.InetSocketAddress;
 import java.util.Collection;
-import java.util.concurrent.ExecutorService;
 
 import pub.vrtech.common.Constants;
 import pub.vrtech.common.URL;
@@ -25,7 +24,6 @@ import pub.vrtech.common.logs.Logger;
 import pub.vrtech.common.logs.LoggerFactory;
 import pub.vrtech.common.utils.NetUtils;
 import pub.vrtech.transport.AbstractEndpoint;
-import pub.vrtech.transport.AbstractPeer;
 import pub.vrtech.transport.Channel;
 import pub.vrtech.transport.ChannelHandler;
 import pub.vrtech.transport.RemotingException;
@@ -48,11 +46,9 @@ public abstract class AbstractServer extends AbstractEndpoint implements Server 
 
     private int accepts;
 
-    private int idleTimeout = 600;
+    private int idleTimeout = 600;// 600 seconds
 
     protected static final String SERVER_THREAD_POOL_NAME = "MonkeyServerHandler";
-
-    ExecutorService executor;
 
     public AbstractServer(URL url, ChannelHandler handler)
             throws RemotingException {
@@ -79,9 +75,6 @@ public abstract class AbstractServer extends AbstractEndpoint implements Server 
                             + getLocalAddress() + ", cause: " + t.getMessage(),
                     t);
         }
-        // if (handler instanceof WrappedChannelHandler) {
-        // executor = ((WrappedChannelHandler) handler).getExecutor();
-        // }
     }
 
     protected abstract void doOpen() throws Throwable;
@@ -126,7 +119,10 @@ public abstract class AbstractServer extends AbstractEndpoint implements Server 
         }
         super.disconnected(ch);
     }
-    
+
+    /***
+     * 广播
+     */
     public void send(Object message, boolean sent) throws RemotingException {
         Collection<Channel> channels = getChannels();
         for (Channel channel : channels) {

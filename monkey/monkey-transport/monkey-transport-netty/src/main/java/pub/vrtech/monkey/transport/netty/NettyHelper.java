@@ -35,7 +35,7 @@ public class NettyHelper {
         InternalLoggerFactory factory = InternalLoggerFactory
                 .getDefaultFactory();
         if (factory == null || !(factory instanceof MonkeyLoggerFactory)) {
-
+            InternalLoggerFactory.setDefaultFactory(new MonkeyLoggerFactory());
         }
     }
 

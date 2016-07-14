@@ -40,13 +40,15 @@ import pub.vrtech.transport.transports.AbstractServer;
 
 /**
  *
- * Function description：
- *  1.netty server
+ * Function description： 1.netty server
  * 
  * @author houge
  */
 public class NettyServer extends AbstractServer {
 
+    /***
+     * Logger
+     */
     private final static Logger logger = LoggerFactory
             .getLogger(NettyServer.class);
 
@@ -56,8 +58,15 @@ public class NettyServer extends AbstractServer {
 
     private io.netty.channel.Channel channel;
 
-    EventLoopGroup workerGroup = null;
-    EventLoopGroup bossGroup = null;
+    /***
+     * 工作线程组
+     */
+    private EventLoopGroup workerGroup = null;
+    
+    /***
+     * BOSS线程组
+     */
+    private EventLoopGroup bossGroup = null;
 
     /**
      * @param url
@@ -77,15 +86,22 @@ public class NettyServer extends AbstractServer {
     @SuppressWarnings("rawtypes")
     @Override
     protected void doOpen() throws Throwable {
+        
         NettyHelper.setNettyLoggerFactory();// 设置日志托管到自己的日志系统
+
+        // 设置Boss和worker线程数目
         bossGroup = new NioEventLoopGroup(1, new NamedThreadFactory(
                 "NettyServerBoss", true));
+        
         workerGroup = new NioEventLoopGroup(0, new NamedThreadFactory(
-                "NettyServerBoss", true));// 设置0表示CPU核心数目×2+1
+                "NettyServerWoker", true));// 设置0表示CPU核心数目×2+1
+
         bootstrap = new ServerBootstrap();
         bootstrap.group(bossGroup, workerGroup).channel(
                 NioServerSocketChannel.class);
+
         final NettyHandler nettyHandler = new NettyHandler(getUrl(), this);
+        channels = nettyHandler.getChannles();
         bootstrap.handler(new ChannelInitializer() {
             NettyCodecAdapter adapter = new NettyCodecAdapter(getCodec(),
                     getUrl(), NettyServer.this);
@@ -98,7 +114,8 @@ public class NettyServer extends AbstractServer {
                 pipeline.addLast(nettyHandler);
             }
         });
-        ChannelFuture channelFuture = bootstrap.bind(getBindAddress());
+        // 初始化
+        ChannelFuture channelFuture = bootstrap.bind(getBindAddress()).sync();
         this.channel = channelFuture.channel();
     }
 

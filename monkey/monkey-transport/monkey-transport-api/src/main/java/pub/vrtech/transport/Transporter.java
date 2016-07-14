@@ -52,6 +52,6 @@ public interface Transporter {
      *            IO处理handler
      * @return
      */
-    public Client connect(String url, ChannelHandler handler);
+    public Client connect(String url, ChannelHandler handler)throws RemotingException ;
 
 }

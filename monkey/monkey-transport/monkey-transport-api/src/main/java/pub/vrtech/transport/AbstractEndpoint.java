@@ -15,9 +15,12 @@
  */
 package pub.vrtech.transport;
 
+import pub.vrtech.common.Constants;
 import pub.vrtech.common.URL;
 import pub.vrtech.common.logs.Logger;
 import pub.vrtech.common.logs.LoggerFactory;
+import pub.vrtech.common.protocol.Protocol;
+import pub.vrtech.protocol.RedisCommandCodec;
 
 /**
  *
@@ -30,11 +33,10 @@ public abstract class AbstractEndpoint extends AbstractPeer {
     private final static Logger logger = LoggerFactory
             .getLogger(AbstractEndpoint.class);
 
-    private Codec codec;
+    protected Codec codec;
 
-    private int timeout;
-
-    private int connectTimeout;
+    protected int timeout;
+    protected int connectTimeout;
 
     /**
      * @param url
@@ -42,11 +44,30 @@ public abstract class AbstractEndpoint extends AbstractPeer {
      */
     public AbstractEndpoint(URL url, ChannelHandler handler) {
         super(url, handler);
+        this.codec = getCodecHandler();
+        this.timeout = url.getPositiveParameter(Constants.TIMEOUT_KEY,
+                Constants.DEFAULT_TIMEOUT);
+        this.connectTimeout = url.getPositiveParameter(
+                Constants.CONNECT_TIMEOUT_KEY,
+                Constants.DEFAULT_CONNECT_TIMEOUT);
     }
 
     public Codec getCodec() {
         return codec;
     }
 
-    
+    protected Codec getCodecHandler(URL url) {
+        Protocol pro = url.getProtocol();
+        Codec codec = null;
+        switch (pro) {
+            case REDIS :
+                codec = new RedisCommandCodec();
+                break;
+
+            default :
+                break;
+        }
+        return codec;
+    }
+
 }

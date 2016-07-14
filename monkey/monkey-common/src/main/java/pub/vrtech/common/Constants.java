@@ -10,84 +10,39 @@ import java.util.regex.Pattern;
  */
 public class Constants {
 
-    public static final String  PROVIDER                           = "provider";
-
-    public static final String  CONSUMER                           = "consumer";
-
-    public static final String  REGISTER                           = "register";
-
-    public static final String  UNREGISTER                         = "unregister";
-
-    public static final String  SUBSCRIBE                          = "subscribe";
-
-    public static final String  UNSUBSCRIBE                        = "unsubscribe";
-    
-    public static final String  CATEGORY_KEY                       = "category";
-
-    public static final String  PROVIDERS_CATEGORY                 = "providers";
-
-    public static final String  CONSUMERS_CATEGORY                 = "consumers";
-
-    public static final String  ROUTERS_CATEGORY                   = "routers";
-
-    public static final String  CONFIGURATORS_CATEGORY             = "configurators";
-
-    public static final String  DEFAULT_CATEGORY                   = PROVIDERS_CATEGORY;
-
-    public static final String  ENABLED_KEY                        = "enabled";
-
-    public static final String  DISABLED_KEY                       = "disabled";
-
-    public static final String  VALIDATION_KEY                     = "validation";
-
-    public static final String  CACHE_KEY                          = "cache";
-
-    public static final String  DYNAMIC_KEY                        = "dynamic";
-
-//    public static final String  DUBBO_PROPERTIES_KEY               = "dubbo.properties.file";
-//
-//    public static final String  DEFAULT_DUBBO_PROPERTIES           = "dubbo.properties";
-
     public static final String  SENT_KEY                           = "sent";
 
     public static final boolean DEFAULT_SENT                       = false;
 
-    public static final String  REGISTRY_PROTOCOL                  = "registry";
-
-    public static final String  $INVOKE                            = "$invoke";
-
-    public static final String  $ECHO                              = "$echo";
-
     public static final int     DEFAULT_IO_THREADS                 = Runtime.getRuntime()
                                                                            .availableProcessors() + 1;
-
     public static final String  DEFAULT_PROXY                      = "javassist";
 
     public static final int     DEFAULT_PAYLOAD                    = 8 * 1024 * 1024;                      // 8M
 
     public static final String  DEFAULT_CLUSTER                    = "failover";
 
-    public static final String  DEFAULT_DIRECTORY                  = "dubbo";
+//    public static final String  DEFAULT_DIRECTORY                  = "dubbo";
 
     public static final String  DEFAULT_LOADBALANCE                = "random";
 
     public static final String  DEFAULT_PROTOCOL                   = "dubbo";
 
     public static final String  DEFAULT_EXCHANGER                  = "header";
+//
+//    public static final String  DEFAULT_TRANSPORTER                = "netty";
+//
+//    public static final String  DEFAULT_REMOTING_SERVER            = "netty";
+//
+//    public static final String  DEFAULT_REMOTING_CLIENT            = "netty";
 
-    public static final String  DEFAULT_TRANSPORTER                = "netty";
-
-    public static final String  DEFAULT_REMOTING_SERVER            = "netty";
-
-    public static final String  DEFAULT_REMOTING_CLIENT            = "netty";
-
-    public static final String  DEFAULT_REMOTING_CODEC             = "dubbo";
-
-    public static final String  DEFAULT_REMOTING_SERIALIZATION     = "hessian2";
-
-    public static final String  DEFAULT_HTTP_SERVER                = "servlet";
-
-    public static final String  DEFAULT_HTTP_CLIENT                = "jdk";
+//    public static final String  DEFAULT_REMOTING_CODEC             = "dubbo";
+//
+//    public static final String  DEFAULT_REMOTING_SERIALIZATION     = "hessian2";
+//
+//    public static final String  DEFAULT_HTTP_SERVER                = "servlet";
+//
+//    public static final String  DEFAULT_HTTP_CLIENT                = "jdk";
 
     public static final String  DEFAULT_HTTP_SERIALIZATION         = "json";
 
@@ -97,7 +52,7 @@ public class Constants {
 
     public static final int     DEFAULT_FORKS                      = 2;
 
-    public static final String  DEFAULT_THREAD_NAME                = "Dubbo";
+//    public static final String  DEFAULT_THREAD_NAME                = "Dubbo";
 
     public static final int     DEFAULT_CORE_THREADS               = 0;
 
@@ -109,7 +64,7 @@ public class Constants {
 
     public static final int     DEFAULT_CONNECTIONS                = 0;
 
-    public static final int     DEFAULT_ACCEPTS                    = 0;
+    public static final int     DEFAULT_ACCEPTS                    = 10000;
 
     public static final int     DEFAULT_IDLE_TIMEOUT               = 600 * 1000;
 
@@ -175,7 +130,7 @@ public class Constants {
 
     public static final String  STUB_KEY                           = "stub";
 
-    public static final String  MOCK_KEY                           = "mock";
+//    public static final String  MOCK_KEY                           = "mock";
 
     public static final String  PROTOCOL_KEY                       = "protocol";
 
@@ -239,7 +194,6 @@ public class Constants {
 
     public static final String  PROMPT_KEY                         = "prompt";
 
-    public static final String  DEFAULT_PROMPT                     = "dubbo>";
 
     public static final String  CODEC_KEY                          = "codec";
 
@@ -308,8 +262,6 @@ public class Constants {
     public static final String  VERSION_KEY                        = "version";
 
     public static final String  REVISION_KEY                       = "revision";
-
-    public static final String  DUBBO_VERSION_KEY                  = "dubbo";
 
     public static final String  HESSIAN_VERSION_KEY                = "hessian.version";
 
@@ -519,8 +471,6 @@ public class Constants {
 
     public static final String  DEFAULT_SCRIPT_TYPE_KEY            = "javascript";
 
-    public static final String  STUB_EVENT_KEY                     = "dubbo.stub.event";
-
     public static final boolean DEFAULT_STUB_EVENT                 = false;
 
     public static final String  STUB_EVENT_METHODS_KEY             = "dubbo.stub.event.methods";
@@ -548,8 +498,6 @@ public class Constants {
 
     public static final long DEFAULT_TPS_LIMIT_INTERVAL            = 60 * 1000;
 
-    public static final String DECODE_IN_IO_THREAD_KEY             = "decode.in.io";
-
     public static final boolean DEFAULT_DECODE_IN_IO_THREAD        = true;
     
     public static final String INPUT_KEY                           = "input";
@@ -564,8 +512,5 @@ public class Constants {
 
     public static final String GENERIC_SERIALIZATION_BEAN          = "bean";
 
-    /*
-     * private Constants(){ }
-     */
 
 }
