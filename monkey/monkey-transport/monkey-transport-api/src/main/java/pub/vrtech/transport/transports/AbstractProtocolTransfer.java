@@ -13,29 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.vrtech.transport;
+package pub.vrtech.transport.transports;
 
+import pub.vrrech.monkey.rpc.api.RpcInvocation;
 import pub.vrtech.common.logs.Logger;
 import pub.vrtech.common.logs.LoggerFactory;
+import pub.vrtech.transport.Decodeable;
 
 /**
  *
- * Function description： 1.XXX 2.XXX
+ * Function description： 抽象协议转换器，用于转换redis命令和二进制命令到RPCInvocation封装 1.XXX 2.XXX
  * 
  * @author houge
  */
-public class HeartbeatHandler extends AbstractChannelHandlerDelegate {
+public abstract class AbstractProtocolTransfer implements ProtocalTransfor {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(HeartbeatHandler.class);
+    protected final static Logger logger = LoggerFactory
+            .getLogger(AbstractProtocolTransfer.class);
 
-    /**
-     * @param handler
-     */
-    protected HeartbeatHandler(ChannelHandler handler) {
-        super(handler);
+    @Override
+    public RpcInvocation transfer(Decodeable decodeable) {
+        return doTransfer(decodeable);
     }
-    
-    
+
+    protected abstract RpcInvocation doTransfer(Decodeable decodeable);
 
 }

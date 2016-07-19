@@ -13,9 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.vrtech.transport;
+package pub.vrtech.transport.handler;
 
-import java.util.List;
+import pub.vrtech.common.logs.Logger;
+import pub.vrtech.common.logs.LoggerFactory;
+import pub.vrtech.transport.AbstractChannelHandlerDelegate;
+import pub.vrtech.transport.ChannelHandler;
 
 /**
  *
@@ -23,27 +26,18 @@ import java.util.List;
  * 
  * @author houge
  */
-public class MutiMessageHandler extends AbstractChannelHandlerDelegate {
+public class HeartbeatHandler extends AbstractChannelHandlerDelegate {
+
+    private static final Logger logger = LoggerFactory
+            .getLogger(HeartbeatHandler.class);
 
     /**
      * @param handler
      */
-    protected MutiMessageHandler(ChannelHandler handler) {
+    protected HeartbeatHandler(ChannelHandler handler) {
         super(handler);
     }
-
-    @Override
-    public void received(Channel channel, Object message)
-            throws RemotingException {
-        if (message instanceof List) {
-            @SuppressWarnings("unchecked")
-            List<Object> listMsg =  (List<Object>) message;
-            for (Object msg : listMsg) {
-                handler.received(channel, msg);
-            }
-        } else {
-            handler.received(channel, message);
-        }
-    }
+    
+    
 
 }

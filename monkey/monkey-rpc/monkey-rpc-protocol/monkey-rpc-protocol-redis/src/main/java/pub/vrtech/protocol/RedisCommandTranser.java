@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.vrtech.transport;
+package pub.vrtech.protocol;
 
-import pub.vrtech.common.logs.Logger;
-import pub.vrtech.common.logs.LoggerFactory;
+import pub.vrrech.monkey.rpc.api.RpcInvocation;
+import pub.vrtech.transport.Decodeable;
+import pub.vrtech.transport.transports.AbstractProtocolTransfer;
 
 /**
  *
@@ -24,24 +25,21 @@ import pub.vrtech.common.logs.LoggerFactory;
  * 
  * @author houge
  */
-public class MessageTransformerHanlder extends AbstractChannelHandlerDelegate {
+public class RedisCommandTranser extends AbstractProtocolTransfer {
 
-    private final static Logger logger = LoggerFactory
-            .getLogger(MessageTransformerHanlder.class);
-
-    /**
-     * @param handler
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * pub.vrtech.transport.transports.AbstractProtocolTransfer#doTransfer(pub
+     * .vrtech.transport.Decodeable)
      */
-    protected MessageTransformerHanlder(ChannelHandler handler) {
-        super(handler);
-    }
-
     @Override
-    public void received(Channel channel, Object message)
-            throws RemotingException {
-        super.received(channel, message);
+    protected RpcInvocation doTransfer(Decodeable decodeable) {
+        RedisCommand cmd = (RedisCommand) decodeable;
         
 
+        return null;
     }
 
 }

@@ -15,13 +15,17 @@
  */
 package pub.vrtech.transport.transports;
 
+import pub.vrrech.monkey.rpc.api.RpcInvocation;
+import pub.vrtech.transport.Decodeable;
+
 /**
  *
- * Function description：
- * 1.XXX
- * 2.XXX
+ * Function description： 1.XXX 2.XXX
+ * 
  * @author houge
  */
 public interface ProtocalTransfor {
+
+    RpcInvocation transfer(Decodeable decodeable);
 
 }

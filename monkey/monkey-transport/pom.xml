@@ -11,6 +11,7 @@
 	<modules>
 		<module>monkey-transport-api</module>
 		<module>monkey-transport-netty</module>
+		<module>monkey-transport-default</module>
 	</modules>
 
 	<dependencies>
