@@ -1,3 +1,5 @@
+package pub.vrtech.transport;
+
 /*
  * Copyright 2016  VRTECH.
  *  
@@ -13,10 +15,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.vrtech.common;
-
-import pub.vrtech.common.logs.Logger;
-import pub.vrtech.common.logs.LoggerFactory;
 
 /**
  *
@@ -24,15 +22,23 @@ import pub.vrtech.common.logs.LoggerFactory;
  * 
  * @author houge
  */
-public class Version {
-    
-    private static final Logger logger = LoggerFactory.getLogger(Version.class);
+public abstract class AbstractDecodeable implements Decodeable {
 
-    private static final String VERSION = "1.0.0";
+    protected DecodeType type;
 
-    public static String getVersion() {
-        return VERSION;
+    public AbstractDecodeable(DecodeType type) {
+        this.type = type;
+
     }
-    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see pub.vrtech.transport.Decodeable#getDecodeType()
+     */
+    @Override
+    public DecodeType getDecodeType() {
+        // TODO Auto-generated method stub
+        return this.type;
+    }
 
 }

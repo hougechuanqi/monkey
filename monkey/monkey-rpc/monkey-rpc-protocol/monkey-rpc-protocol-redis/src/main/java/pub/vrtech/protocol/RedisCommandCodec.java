@@ -31,9 +31,7 @@ import pub.vrtech.transport.transports.CodecType;
  * 
  * @author houge
  */
-public class RedisCommandCodec extends AbstractCodec
-        implements
-            IRedisProtocol {
+public class RedisCommandCodec extends AbstractCodec {
 
     /****
      * byte bucket

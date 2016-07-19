@@ -20,16 +20,13 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.handler.codec.MessageToByteEncoder;
 
-import java.io.IOException;
 import java.util.List;
 
-import pub.vrtech.common.Constants;
 import pub.vrtech.common.URL;
 import pub.vrtech.transport.ChannelHandler;
 import pub.vrtech.transport.Codec;
 import pub.vrtech.transport.buffer.ChannelBuffer;
 import pub.vrtech.transport.buffer.ChannelBuffers;
-import pub.vrtech.transport.buffer.DynamicChannelBuffer;
 
 /**
  *
@@ -49,19 +46,12 @@ public class NettyCodecAdapter {
 
     private final ChannelHandler handler;
 
-    private final int bufferSize;
+//    private final int bufferSize;
 
     public NettyCodecAdapter(Codec codec, URL url, ChannelHandler handler) {
         this.codec = codec;
         this.url = url;
         this.handler = handler;
-        int b = url.getPositiveParameter(Constants.BUFFER_KEY,
-                Constants.DEFAULT_BUFFER_SIZE);
-        this.bufferSize = b >= Constants.MIN_BUFFER_SIZE
-                && b <= Constants.MAX_BUFFER_SIZE
-                ? b
-                : Constants.DEFAULT_BUFFER_SIZE;
-
     }
 
     @SuppressWarnings("rawtypes")
@@ -100,68 +90,6 @@ public class NettyCodecAdapter {
             NettyChannel channel = NettyChannel.getOrAddChannel(ctx.channel(),
                     url, handler);
             codec.decode(channel, in, out);
-            
-
-            // ByteBuf input = (ByteBuf) in;
-            // int readable = input.readableBytes();
-            // if (readable <= 0) {
-            // return;
-            // }
-            // ChannelBuffer message;
-            // if (buffer.readable()) {
-            // if (buffer instanceof DynamicChannelBuffer) {
-            // buffer.writeBytes(input.array());
-            // message = buffer;
-            // } else {
-            // int size = buffer.readableBytes() + input.readableBytes();
-            // message = ChannelBuffers.dynamicBuffer(size > bufferSize
-            // ? size
-            // : bufferSize);
-            // message.writeBytes(buffer, buffer.readableBytes());
-            // message.writeBytes(input.array());
-            // }
-            // } else {
-            // message = ChannelBuffers.wrappedBuffer(input.array());
-            // }
-            //
-            // NettyChannel channel =
-            // NettyChannel.getOrAddChannel(ctx.channel(),
-            // url, handler);
-            // Object msg;
-            // int saveReaderIndex;
-            //
-            // try {
-            // // decode object.
-            // do {
-            // saveReaderIndex = message.readerIndex();
-            // try {
-            // msg = codec.decode(channel, message);
-            // } catch (IOException e) {
-            // buffer = ChannelBuffers.EMPTY_BUFFER;
-            // throw e;
-            // }
-            // if (msg == Codec.DecodeResult.NEED_MORE_INPUT) {
-            // message.readerIndex(saveReaderIndex);
-            // break;
-            // } else {
-            // if (saveReaderIndex == message.readerIndex()) {
-            // buffer = ChannelBuffers.EMPTY_BUFFER;
-            // throw new IOException("Decode without read data.");
-            // }
-            // if (msg != null) {
-            // out.add(msg);
-            // }
-            // }
-            // } while (message.readable());
-            // } finally {
-            // if (message.readable()) {
-            // message.discardReadBytes();
-            // buffer = message;
-            // } else {
-            // buffer = ChannelBuffers.EMPTY_BUFFER;
-            // }
-            // NettyChannel.removeChannelIfDisconnected(ctx.channel());
-            // }
         }
     }
 

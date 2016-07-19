@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.vrtech.common;
+package pub.vrtech.transport;
 
 import pub.vrtech.common.logs.Logger;
 import pub.vrtech.common.logs.LoggerFactory;
@@ -24,15 +24,24 @@ import pub.vrtech.common.logs.LoggerFactory;
  * 
  * @author houge
  */
-public class Version {
-    
-    private static final Logger logger = LoggerFactory.getLogger(Version.class);
+public class MessageTransformerHanlder extends AbstractChannelHandlerDelegate {
 
-    private static final String VERSION = "1.0.0";
+    private final static Logger logger = LoggerFactory
+            .getLogger(MessageTransformerHanlder.class);
 
-    public static String getVersion() {
-        return VERSION;
+    /**
+     * @param handler
+     */
+    protected MessageTransformerHanlder(ChannelHandler handler) {
+        super(handler);
     }
-    
+
+    @Override
+    public void received(Channel channel, Object message)
+            throws RemotingException {
+        super.received(channel, message);
+        
+
+    }
 
 }

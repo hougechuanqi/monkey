@@ -109,18 +109,18 @@ public class NettyHandler extends ChannelInboundHandlerAdapter {
         }
     }
 
-//    @Override
-//    public void userEventTriggered(ChannelHandlerContext ctx, Object evt)
-//            throws Exception {
-//        super.userEventTriggered(ctx, evt);
-//        NettyChannel channel = NettyChannel.getOrAddChannel(ctx.channel(), url,
-//                handler);
-//        try {
-//            handler.sent(channel, evt);
-//        } finally {
-//            NettyChannel.removeChannelIfDisconnected(ctx.channel());
-//        }
-//    }
+    // @Override
+    // public void userEventTriggered(ChannelHandlerContext ctx, Object evt)
+    // throws Exception {
+    // super.userEventTriggered(ctx, evt);
+    // NettyChannel channel = NettyChannel.getOrAddChannel(ctx.channel(), url,
+    // handler);
+    // try {
+    // handler.sent(channel, evt);
+    // } finally {
+    // NettyChannel.removeChannelIfDisconnected(ctx.channel());
+    // }
+    // }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)

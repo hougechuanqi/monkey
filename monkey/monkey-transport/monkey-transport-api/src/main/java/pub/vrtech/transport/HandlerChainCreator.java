@@ -13,10 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.vrtech.common;
-
-import pub.vrtech.common.logs.Logger;
-import pub.vrtech.common.logs.LoggerFactory;
+package pub.vrtech.transport;
 
 /**
  *
@@ -24,14 +21,15 @@ import pub.vrtech.common.logs.LoggerFactory;
  * 
  * @author houge
  */
-public class Version {
-    
-    private static final Logger logger = LoggerFactory.getLogger(Version.class);
+public class HandlerChainCreator {
 
-    private static final String VERSION = "1.0.0";
-
-    public static String getVersion() {
-        return VERSION;
+    private final static class HandlerChainCreatorHolder {
+        private final static HandlerChainCreator instance = new HandlerChainCreator();
+    }
+    private HandlerChainCreator() {
+    }
+    public final static HandlerChainCreator getInstance() {
+        return HandlerChainCreatorHolder.instance;
     }
     
 

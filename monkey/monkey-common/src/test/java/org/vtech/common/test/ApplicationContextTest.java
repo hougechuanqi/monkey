@@ -17,6 +17,7 @@ package org.vtech.common.test;
 
 import org.junit.Test;
 
+import pub.vrtech.common.URL;
 import pub.vrtech.common.serialize.support.json.FastJsonSerialization;
 
 /**
@@ -31,6 +32,9 @@ public class ApplicationContextTest {
     @Test
     public void test() {
         
+        String  url="redis://192.168.1.2:8080/test/getGoods?timeout=100";
+        URL  uu=URL.valueOf(url);
+        System.out.println(uu);
     }
 
 }

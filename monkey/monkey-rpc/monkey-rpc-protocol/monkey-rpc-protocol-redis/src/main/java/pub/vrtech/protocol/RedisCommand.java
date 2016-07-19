@@ -15,12 +15,14 @@
  */
 package pub.vrtech.protocol;
 
+import io.netty.buffer.ByteBuf;
+
 import org.apache.commons.codec.Charsets;
 
-import io.netty.buffer.ByteBuf;
 import pub.vrtech.common.utils.BytesUtils;
+import pub.vrtech.transport.AbstractDecodeable;
+import pub.vrtech.transport.DecodeType;
 import pub.vrtech.transport.Decodeable;
-import pub.vrtech.transport.transports.Packet;
 
 /**
  *
@@ -28,7 +30,7 @@ import pub.vrtech.transport.transports.Packet;
  * 
  * @author houge
  */
-public class RedisCommand implements Decodeable {
+public class RedisCommand extends AbstractDecodeable {
 
     public static final byte[] EMPTY_BYTES = new byte[0];
 
@@ -44,6 +46,7 @@ public class RedisCommand implements Decodeable {
     private CommandType type;
 
     public RedisCommand(Object[] redisCommands) {
+        super(DecodeType.REDIS_COMMAND);
         this.redisCommands = redisCommands;
     }
 
@@ -63,8 +66,8 @@ public class RedisCommand implements Decodeable {
     public byte[] getCmdName() {
         return getBytes(redisCommands[0]);
     }
-    
-    public byte[] getCmdKey(){
+
+    public byte[] getCmdKey() {
         return getBytes(redisCommands[1]);
     }
 
@@ -94,7 +97,7 @@ public class RedisCommand implements Decodeable {
         byte[] name = this.getCmdName();
         this.name = new String(BytesUtils.toLowerByte(name));
         this.type = CommandType.getCmdType(this.name);
-        this.key =new String(BytesUtils.toLowerByte(this.getCmdKey()));
+        this.key = new String(BytesUtils.toLowerByte(this.getCmdKey()));
     }
 
     public CommandType getType() {

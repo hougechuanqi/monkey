@@ -13,10 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.vrtech.common;
-
-import pub.vrtech.common.logs.Logger;
-import pub.vrtech.common.logs.LoggerFactory;
+package pub.vrtech.transport;
 
 /**
  *
@@ -24,15 +21,19 @@ import pub.vrtech.common.logs.LoggerFactory;
  * 
  * @author houge
  */
-public class Version {
-    
-    private static final Logger logger = LoggerFactory.getLogger(Version.class);
+public enum DecodeType {
 
-    private static final String VERSION = "1.0.0";
+    REDIS_COMMAND(0, "Redis command"),
 
-    public static String getVersion() {
-        return VERSION;
+    BINARY(1, "Binary command");
+
+    ;
+    private final int id;
+    private final String desc;
+
+    private DecodeType(final int id, final String desc) {
+        this.id = id;
+        this.desc = desc;
     }
-    
 
 }

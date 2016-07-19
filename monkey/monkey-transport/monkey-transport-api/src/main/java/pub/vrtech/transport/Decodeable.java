@@ -25,5 +25,7 @@ package pub.vrtech.transport;
 public interface Decodeable {
     
     public void decode() throws Exception;
+    
+    DecodeType  getDecodeType();
 
 }
