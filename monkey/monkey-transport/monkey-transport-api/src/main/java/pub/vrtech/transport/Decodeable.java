@@ -17,15 +17,14 @@ package pub.vrtech.transport;
 
 /**
  *
- * Function description：
- * 1.XXX
- * 2.XXX
+ * Function description： 1.XXX 2.XXX
+ * 
  * @author houge
  */
 public interface Decodeable {
-    
+
     public void decode() throws Exception;
-    
-    DecodeType  getDecodeType();
+
+    DecodeType getDecodeType();
 
 }

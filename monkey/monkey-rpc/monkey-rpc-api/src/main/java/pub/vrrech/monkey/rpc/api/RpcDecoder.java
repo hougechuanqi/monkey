@@ -15,8 +15,9 @@
  */
 package pub.vrrech.monkey.rpc.api;
 
-import pub.vrtech.transport.Channel;
-import pub.vrtech.transport.transports.Packet;
+import java.nio.channels.Channel;
+
+import pub.vrtech.transport.Decodeable;
 
 /**
  *
@@ -26,6 +27,12 @@ import pub.vrtech.transport.transports.Packet;
  */
 public interface RpcDecoder {
     
-    public RpcExchanger decode(Channel channel, Packet msg);
+    /***
+     * 解码
+     * @param channel
+     * @param msg
+     * @return
+     */
+    public RpcExchanger decode(Channel channel, Decodeable msg);
 
 }
