@@ -15,24 +15,24 @@
  */
 package pub.vrtech.transport.handler;
 
-import pub.vrrech.monkey.rpc.api.RpcInvocation;
+import java.nio.charset.Charset;
+
 import pub.vrtech.common.logs.Logger;
 import pub.vrtech.common.logs.LoggerFactory;
 import pub.vrtech.protocol.RedisCommand;
-import pub.vrtech.transport.AbstractChannelHandlerDelegate;
 import pub.vrtech.transport.Channel;
 import pub.vrtech.transport.ChannelHandler;
-import pub.vrtech.transport.DecodeType;
 import pub.vrtech.transport.Decodeable;
-import pub.vrtech.transport.RemotingException;
+import pub.vrtech.transport.transports.DecodeHandler;
 
 /**
  *
  * Function description： 1.XXX 2.XXX
  * 
+ * 
  * @author houge
  */
-public class MessageTransformerHanlder extends AbstractChannelHandlerDelegate {
+public class MessageTransformerHanlder extends DecodeHandler {
 
     private final static Logger logger = LoggerFactory
             .getLogger(MessageTransformerHanlder.class);
@@ -45,16 +45,15 @@ public class MessageTransformerHanlder extends AbstractChannelHandlerDelegate {
     }
 
     @Override
-    public void received(Channel channel, Object message)
-            throws RemotingException {
-        super.received(channel, message);
+    protected Object doTransferRpcInvocation(Channel channel, Object message) {
         if (message instanceof Decodeable) {
             Decodeable msg = (Decodeable) message;
-            final DecodeType type = msg.getDecodeType();
-            switch (type) {
+            switch (msg.getDecodeType()) {
                 case REDIS_COMMAND :
-                    RedisCommand cmd = (RedisCommand) message;
-                    RpcInvocation
+                    RedisCommand cmd = (RedisCommand) msg;
+                    final String key = new String(cmd.getCmdKey(),
+                            Charset.forName("UTF-8"));
+                    
 
                     break;
                 case BINARY :
@@ -64,11 +63,6 @@ public class MessageTransformerHanlder extends AbstractChannelHandlerDelegate {
                     break;
             }
         }
-
-    }
-    private RpcInvocation transfer2RpcInvocation(RedisCommand  rpccmd) {
-        
-
         return null;
     }
 

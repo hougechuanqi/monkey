@@ -36,7 +36,6 @@ public class RedisCommandTranser extends AbstractProtocolTransfer {
      */
     @Override
     protected RpcInvocation doTransfer(Decodeable decodeable) {
-        RedisCommand cmd = (RedisCommand) decodeable;
         
 
         return null;

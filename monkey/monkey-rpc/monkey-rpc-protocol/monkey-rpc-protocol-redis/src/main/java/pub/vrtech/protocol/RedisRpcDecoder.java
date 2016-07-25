@@ -17,9 +17,7 @@ package pub.vrtech.protocol;
 
 import pub.vrrech.monkey.rpc.api.RpcDecoder;
 import pub.vrrech.monkey.rpc.api.RpcExchanger;
-import pub.vrtech.transport.Channel;
 import pub.vrtech.transport.Decodeable;
-import pub.vrtech.transport.transports.Packet;
 
 /**
  *
@@ -41,9 +39,15 @@ public class RedisRpcDecoder implements RpcDecoder {
      */
     @Override
     public RpcExchanger decode(java.nio.channels.Channel channel, Decodeable msg) {
-        if (msg instanceof RedisCommand) {// 如果是RedisCommand
-            
+        switch (msg.getDecodeType()) {
+            case REDIS_COMMAND :
+                RedisCommand redisCmd = (RedisCommand) msg;
+                redisCmd.getCmdKey();
+                
+                break;
 
+            default :
+                break;
         }
 
         return null;

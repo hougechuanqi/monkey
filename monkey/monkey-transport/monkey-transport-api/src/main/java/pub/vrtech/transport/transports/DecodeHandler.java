@@ -25,42 +25,50 @@ import pub.vrtech.transport.RemotingException;
 
 /**
  *
- * Function description：
- * 1.XXX
- * 2.XXX
+ * Function description： 1.XXX 2.XXX
+ * 
  * @author houge
  */
 public abstract class DecodeHandler extends AbstractChannelHandlerDelegate {
 
-    private static final Logger log = LoggerFactory.getLogger(DecodeHandler.class);
+    private static final Logger log = LoggerFactory
+            .getLogger(DecodeHandler.class);
 
     public DecodeHandler(ChannelHandler handler) {
         super(handler);
     }
 
-    public void received(Channel channel, Object message) throws RemotingException {
+    public void received(Channel channel, Object message)
+            throws RemotingException {
         if (message instanceof Decodeable) {
             decode(message);
         }
-        handler.received(channel, message);
+        handler.received(channel, doTransferRpcInvocation(channel, message));
     }
     
+    /***
+     * 
+     * @param channel
+     * @param message
+     * @return
+     */
+    protected abstract Object doTransferRpcInvocation(Channel channel, Object message);
 
     private void decode(Object message) {
         if (message != null && message instanceof Decodeable) {
             try {
-                ((Decodeable)message).decode();
+                ((Decodeable) message).decode();
                 if (log.isDebugEnabled()) {
-                    log.debug(new StringBuilder(32).append("Decode decodeable message ")
-                                  .append(message.getClass().getName()).toString());
+                    log.debug(new StringBuilder(32)
+                            .append("Decode decodeable message ")
+                            .append(message.getClass().getName()).toString());
                 }
             } catch (Throwable e) {
                 if (log.isWarnEnabled()) {
                     log.warn(
-                        new StringBuilder(32)
-                            .append("Call Decodeable.decode failed: ")
-                            .append(e.getMessage()).toString(),
-                        e);
+                            new StringBuilder(32)
+                                    .append("Call Decodeable.decode failed: ")
+                                    .append(e.getMessage()).toString(), e);
                 }
             } // ~ end of catch
         } // ~ end of if
