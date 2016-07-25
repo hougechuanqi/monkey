@@ -13,5 +13,6 @@
     <module>monkey-rcp-protocol</module>
     <module>monkey-rpc-protocol</module>
     <module>monkey-rpc-default</module>
+    <module>monkey-rpc-regist</module>
   </modules>
 </project>
